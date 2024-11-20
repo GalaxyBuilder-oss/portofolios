@@ -1,0 +1,1 @@
+export type SortOption = 'projectName' | 'createdAt' | 'updateAt' | 'startDate' | 'endDate';

@@ -1,8 +1,14 @@
 import { AppProps } from "next/app";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/global.css";
+import "react-datetime/css/react-datetime.css";
+import AppProvider from "../components/AppContext";
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <Component {...pageProps} />
+    <AppProvider>
+      <Component {...pageProps} />
+    </AppProvider>
   );
 };
 
