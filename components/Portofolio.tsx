@@ -3,10 +3,12 @@ import Router from "next/router";
 import ReactMarkdown from "react-markdown";
 import { Card, Button } from "react-bootstrap"; // Assuming you're using Bootstrap for styling
 import { PortofoliosProps } from "../types";
+import { useAppContext } from "./AppContext";
 
 const Portofolio: React.FC<{ portofolio: PortofoliosProps }> = ({
   portofolio,
 }) => {
+  const {timeAgo} = useAppContext()
   const authorName = portofolio.users
     ? portofolio.users.username
     : "Unknown User";
@@ -39,35 +41,6 @@ const Portofolio: React.FC<{ portofolio: PortofoliosProps }> = ({
   const endDateDisplay = isHovered
     ? `Berakhir tanggal ${formatDate(new Date(portofolio.endDate))}`
     : timeAgo(new Date(portofolio.endDate));
-
-  function timeAgo(date: Date): string {
-    const now = new Date();
-    const diffInMilliseconds = now.getTime() - date.getTime();
-
-    const seconds = Math.floor(diffInMilliseconds / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-    const months =
-      now.getMonth() -
-      date.getMonth() +
-      12 * (now.getFullYear() - date.getFullYear());
-    const years = now.getFullYear() - date.getFullYear();
-
-    if (years > 0) {
-      return `${years} tahun lalu`;
-    } else if (months > 0) {
-      return `${months} bulan lalu`;
-    } else if (days > 0) {
-      return `${days} hari lalu`;
-    } else if (hours > 0) {
-      return `${hours} jam lalu`;
-    } else if (minutes > 0) {
-      return `${minutes} menit lalu`;
-    } else {
-      return "Baru Saja"; // If the date is within the last minute
-    }
-  }
 
   return (
     <Card

@@ -3,7 +3,7 @@ import prisma from "../../../../lib/prisma";
 import { responseMsg } from "../../../../messages/response";
 import { logger } from "../../../../middleware/logger";
 
-export default async function handler(req, res) {
+export default function handler(req, res) {
   logger(req, res, async () => {
     const { projectName, description, status, budget, startDate, endDate } =
       req.body;
@@ -60,10 +60,8 @@ export default async function handler(req, res) {
       }
     } else if (req.method === "PATCH") {
       try {
-        const { projectName, description, status, budget, startDate, endDate } =
-          req.body;
 
-        const portofolio = await prisma.portofolio.findUnique({
+        const portofolio = await prisma.portofolio.findFirst({
           where: {
             id: parseInt(id)
           },
@@ -73,7 +71,8 @@ export default async function handler(req, res) {
         });
 
         if (!portofolio) {
-          return res.status(404).json({ message: "Portfolio not found" });
+          res.status(404).json({ message: "Portfolio not found" });
+          return;
         }
 
         if (projectName) portofolio.project_name = projectName;

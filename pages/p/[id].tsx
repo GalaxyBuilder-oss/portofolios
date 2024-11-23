@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import ReactMarkdown from "react-markdown";
 import Layout from "../../components/Layout";
 import { PortofoliosProps } from "../../types";
-import Cookies from "js-cookie";
 import moment from "moment";
 import Datetime from "react-datetime";
 import axios, { AxiosError } from "axios";
-import { useRouter } from "next/router";
 import { useAppContext } from "../../components/AppContext";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
@@ -19,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 const Portofolio: React.FC<{ id: string }> = ({ id }) => {
-  const { portofolios, token, router, fetchPortofolios } = useAppContext();
+  const { portofolios, token, router, fetchPortofolios, timeAgo } = useAppContext();
   const [props, setProps] = useState<PortofoliosProps>(null);
   const [editPortofolio, setEditPortofolio] = useState<PortofoliosProps>(null);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -33,58 +31,16 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
         const item = portofolios.find((data) => data.id === parseInt(id));
         if (item === null) {
           console.error("Error Eung");
+          return;
         }
         setProps(item); // Ensure setProps is defined in your component
         sessionStorage.setItem("portofolio", JSON.stringify(item));
       } catch (error) {
         console.error("Failed to fetch or process portfolio data:", error);
-        throw new AxiosError(error);
       }
     };
-    fetchData();
-  }, []);
-
-  function timeAgo(date: Date): string {
-    const now = new Date();
-    const diffInMilliseconds = now.getTime() - date.getTime();
-    const seconds = Math.floor(diffInMilliseconds / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-    const months =
-      now.getMonth() -
-      date.getMonth() +
-      12 * (now.getFullYear() - date.getFullYear());
-    const years = now.getFullYear() - date.getFullYear();
-
-    if (date > now) {
-      const diff = date.getTime() - now.getTime();
-      const seconds1 = Math.floor(diff / 1000);
-      const minutes1 = Math.floor(seconds1 / 60);
-      const hours1 = Math.floor(minutes1 / 60);
-      const days1 = Math.floor(hours1 / 24);
-      if (days1 > 0) {
-        return `${days1} hari ${hours1%24} jam ${minutes1%60} menit lagi`;
-      } else if (hours1 > 0) {
-        return `${hours1} jam ${minutes1%60} menit lagi lagi`;
-      }  else if (minutes1 > 0) {
-        return `${minutes1} menit lagi`;
-      } else return "Mendatang";
-    }
-    if (years > 0) {
-      return `${years} tahun lalu`;
-    } else if (months > 0) {
-      return `${months} bulan lalu`;
-    } else if (days > 0) {
-      return `${days} hari lalu`;
-    } else if (hours > 0) {
-      return `${hours} jam lalu`;
-    } else if (minutes > 0) {
-      return `${minutes} menit lalu`;
-    } else {
-      return "Baru Saja"; // If the date is within the last minute
-    }
-  }
+    portofolios ? fetchData() : router.push("/portofolio");
+  }, [token]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -116,36 +72,33 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    
+    // Update the timestamp
     editPortofolio.updatedAt = new Date().toISOString();
-
+    
     try {
-      const response = await fetch(
-        `/api/v1/portofolios/${props.id}`,
-        {
-          method: "PATCH",
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(editPortofolio)
-        }
-      );
+      const response = await axios.patch(`/api/v1/portofolios/${props.id}`, editPortofolio as PortofoliosProps, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
 
-      const result = await response.json(); // Axios automatically parses JSON
-
-      if (result.success) {
+      if (response.data.success) {
         setShowEditModal(false);
         sessionStorage.removeItem("portofolios");
         sessionStorage.removeItem("portofolio");
-        router.push("/portofolio"); // Optionally, you might want to handle this more gracefully
+        router.push("/portofolio"); // Navigate after successful update
       } else {
         console.log("Failed to update portfolio.");
       }
     } catch (error) {
       console.error("Error updating portfolio:", error);
     }
-  };
+  }, [token]);
 
   const handleDelete = async (id: number) => {
     if (!confirm("Anda yakin ingin menghapus ini?")) return;
@@ -153,9 +106,9 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
     try {
       const response = await axios.delete(`/api/v1/portofolios/${id}`, {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        withCredentials: true,
       });
 
       const result = response.data; // Axios automatically parses JSON
