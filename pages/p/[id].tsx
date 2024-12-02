@@ -17,30 +17,14 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 const Portofolio: React.FC<{ id: string }> = ({ id }) => {
-  const { portofolios, token, router, fetchPortofolios, timeAgo } = useAppContext();
+  const { fetchPortofolio, token, router, timeAgo } = useAppContext();
   const [props, setProps] = useState<PortofoliosProps>(null);
-  const [editPortofolio, setEditPortofolio] = useState<PortofoliosProps>(null);
+  const [editPortofolio, setEditPortofolio] = useState<PortofoliosProps>(props);
   const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
-    if (!token) {
-      router.push("/auth/login");
-    }
-    const fetchData = async () => {
-      try {
-        const item = portofolios.find((data) => data.id === parseInt(id));
-        if (item === null) {
-          console.error("Error Eung");
-          return;
-        }
-        setProps(item); // Ensure setProps is defined in your component
-        sessionStorage.setItem("portofolio", JSON.stringify(item));
-      } catch (error) {
-        console.error("Failed to fetch or process portfolio data:", error);
-      }
-    };
-    portofolios ? fetchData() : router.push("/portofolio");
-  }, [token]);
+    fetchPortofolio(parseInt(id), setProps);
+  },[]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -72,33 +56,41 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
     });
   };
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    
-    // Update the timestamp
-    editPortofolio.updatedAt = new Date().toISOString();
-    
-    try {
-      const response = await axios.patch(`/api/v1/portofolios/${props.id}`, editPortofolio as PortofoliosProps, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      });
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault(); // Prevent the default form submission behavior
 
-      if (response.data.success) {
-        setShowEditModal(false);
-        sessionStorage.removeItem("portofolios");
-        sessionStorage.removeItem("portofolio");
-        router.push("/portofolio"); // Navigate after successful update
-      } else {
-        console.log("Failed to update portfolio.");
+      // if (!editPortofolio) return;
+      // Update the timestamp
+      editPortofolio.updatedAt = new Date().toISOString();
+
+      try {
+        const response = await axios.patch(
+          `/api/v1/portofolios/${id}`,
+          editPortofolio,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+          }
+        );
+
+        if (response.data.success) {
+          setShowEditModal(false);
+          sessionStorage.removeItem("portofolios");
+          sessionStorage.removeItem("portofolio");
+          router.push("/portofolio"); // Navigate after successful update
+        } else {
+          console.log("Failed to update portfolio.");
+        }
+      } catch (error) {
+        console.error("Error updating portfolio:", error);
       }
-    } catch (error) {
-      console.error("Error updating portfolio:", error);
-    }
-  }, [token]);
+    },
+    [token]
+  );
 
   const handleDelete = async (id: number) => {
     if (!confirm("Anda yakin ingin menghapus ini?")) return;
@@ -131,12 +123,15 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
       description={`This post is about ${props?.projectName || "Loading..."}`}
     >
       <div className="portfolio-page">
-        <h2>{props?.projectName || "Loading..."} {props?.status.match("Ongoing") && "(Ongoing)"}</h2>
+        <h2>
+          {props?.projectName || "Loading..."}{" "}
+          {props?.status.match("ongoing") && "(Ongoing)"}
+        </h2>
         <p className="author">By {props?.users?.username || "Unknown User"}</p>
         {props?.coverUrl && (
           <img
-            src={props.coverUrl}
-            alt={props.projectName}
+            src={props?.coverUrl}
+            alt={props?.projectName}
             className="cover-image"
           />
         )}
@@ -168,23 +163,25 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
           </p>
           <ReactMarkdown>{props?.description}</ReactMarkdown>
 
-          <div className="btn-group" role="group">
-            <button
-              className="btn btn-dark"
-              onClick={() => {
-                setShowEditModal(true);
-                setEditPortofolio(props);
-              }}
-            >
-              Edit
-            </button>
-            <button
-              className="btn btn-secondary-dark"
-              onClick={() => handleDelete(props?.id)}
-            >
-              Hapus
-            </button>
-          </div>
+          {token && (
+            <div className="btn-group" role="group">
+              <button
+                className="btn btn-dark"
+                onClick={() => {
+                  setEditPortofolio(props ? props : null);
+                  setShowEditModal(true);
+                }}
+              >
+                Edit
+              </button>
+              <button
+                className="btn btn-secondary-dark"
+                onClick={() => handleDelete(props?.id)}
+              >
+                Hapus
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

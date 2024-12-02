@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie"
+import axios from "axios";
 
 interface RegisterFormState {
   username: string;
@@ -30,9 +31,10 @@ const Register: React.FC = () => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Registration submitted:", form);
+    // const response = await axios.post('/api/v1/auth/register', form,{})
     alert("Registration successful!");
     // Reset form
     setForm({

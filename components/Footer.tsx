@@ -9,8 +9,8 @@ const Footer = () => {
             </div>
             <div>
                 <div className="btn-group btn-group-sm" role="group" aria-label="Footer buttons">
-                    <a href="#" className="btn btn-outline-light">Privacy Policy</a>
-                    <a href="#" className="btn btn-outline-light">Terms of Service</a>
+                    <a href="/policy" className="btn btn-outline-light">Privacy Policy</a>
+                    <a href="/tos" className="btn btn-outline-light">Terms of Service</a>
                     <a href="/contact" className="btn btn-outline-light">Contact Us</a>
                 </div>
             </div>

@@ -40,7 +40,6 @@ export default async function handler(req, res) {
         return;
       }
       const isValid = await verifyPassword(password, result.password);
-      // const isValid = await argon2.verify(result.password, password);
       if (!isValid) {
         responseMsg.BAD_REQUEST.message = "Yahh! Login gagal!";
         res.status(400).send(responseMsg.BAD_REQUEST);

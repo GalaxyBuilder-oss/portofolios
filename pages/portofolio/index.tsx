@@ -7,20 +7,13 @@ import moment from "moment";
 import Datetime from "react-datetime";
 import { useAppContext } from "../../components/AppContext";
 
-const Blog = () => {
-  const {fetchPortofolios, portofolios, router, token} = useAppContext()
+const Portfolio: React.FC = () => {
+  const { fetchPortofolios, portofolios, router, token } = useAppContext();
   const [sortedFeed, setSortedFeed] = useState<PortofoliosProps[]>(portofolios);
   const [sortOption, setSortOption] = useState<SortOption>("projectName");
   const [newPortofolio, setNewPortofolio] =
     useState<PortofoliosProps>(undefined);
   const [showAddModal, setShowAddModal] = useState(false);
-
-  useEffect(() => {
-    if (!token) {
-      router.push("/auth/login");
-    }
-
-  }, []);
 
   useEffect(() => {
     if (portofolios) {
@@ -29,13 +22,12 @@ const Blog = () => {
     }
   }, [portofolios]);
 
-  const fetchingCallback = useCallback(()=>{
+  const fetchingCallback = useCallback(() => {
+    fetchPortofolios();
+  }, []);
 
-    fetchPortofolios()
-  },[])
-  
   useEffect(() => {
-    fetchingCallback()
+    fetchingCallback();
   }, []);
 
   useEffect(() => {
@@ -157,16 +149,22 @@ const Blog = () => {
               <option value="endDate">Tanggal Selesai</option>
             </select>
           </div>
-          <div className="btn-group" role="group" aria-label="this for button">
-            <button
-              className="btn btn-dark"
-              onClick={() => {
-                setShowAddModal(true);
-              }}
+          {token && (
+            <div
+              className="btn-group"
+              role="group"
+              aria-label="this for button"
             >
-              Add
-            </button>
-          </div>
+              <button
+                className="btn btn-dark"
+                onClick={() => {
+                  setShowAddModal(true);
+                }}
+              >
+                Add
+              </button>
+            </div>
+          )}
         </div>
         <main>
           {sortedFeed &&
@@ -252,17 +250,46 @@ const Blog = () => {
                     />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="coverUrl" className="form-label">
-                      Cover
+                    <label htmlFor="budget" className="form-label">
+                      Budget
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      id="coverUrl"
-                      name="coverUrl"
-                      value={newPortofolio?.coverUrl || ""}
+                      id="budget"
+                      name="budget"
+                      value={newPortofolio?.budget || 0}
                       onChange={handleInputChange}
                     />
+                  </div>
+                  <div className="mb-3">
+                    <h6>Status</h6>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="status"
+                        id="ongoing"
+                        value="ongoing"
+                        onChange={handleInputChange}
+                      />
+                      <label className="form-check-label" htmlFor="ongoing">
+                        Ongoing
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="status"
+                        id="done"
+                        value="done"
+                        onChange={handleInputChange}
+                      />
+                      <label className="form-check-label" htmlFor="done">
+                        Done
+                      </label>
+                    </div>
                   </div>
                 </div>
                 <div className="modal-footer">
@@ -286,4 +313,4 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default Portfolio;

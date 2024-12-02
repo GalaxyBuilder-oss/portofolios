@@ -2,8 +2,30 @@ import { Decimal } from "@prisma/client/runtime/library";
 import prisma from "../../../../lib/prisma";
 import { responseMsg } from "../../../../messages/response";
 import { logger } from "../../../../middleware/logger";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === "GET") {
+    try {
+      const result = await prisma.portofolio.findFirst({
+        where: {
+          id: parseInt(req.query.id as string)
+        },
+        include: {
+          users: true,
+        },
+      });
+      responseMsg.OK = {
+        ...responseMsg.OK,
+        message: "Yeay! Berhasil mendapatkan data",
+        data: result,
+      };
+      return res.status(200).json(responseMsg.OK);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json(responseMsg.INTERNAL_ERROR);
+    }
+  } else
   logger(req, res, async () => {
     const { projectName, description, status, budget, startDate, endDate } =
       req.body;
@@ -12,7 +34,7 @@ export default function handler(req, res) {
       try {
         const result = await prisma.portofolio.update({
           where: {
-            id: parseInt(id),
+            id: parseInt(id as string),
           },
           data: {
             project_name: projectName,
@@ -38,32 +60,12 @@ export default function handler(req, res) {
         console.error(error);
         res.status(500).json(responseMsg.INTERNAL_ERROR);
       }
-    } else if (req.method === "GET") {
-      try {
-        const result = await prisma.portofolio.findFirst({
-          where: {
-            id: parseInt(id)
-          },
-          include: {
-            users: true,
-          },
-        });
-        responseMsg.OK = {
-          ...responseMsg.OK,
-          message: "Yeay! Berhasil mendapatkan data",
-          data: result,
-        };
-        res.status(200).json(responseMsg.OK);
-      } catch (error) {
-        console.error(error);
-        res.status(500).json(responseMsg.INTERNAL_ERROR);
-      }
     } else if (req.method === "PATCH") {
       try {
 
         const portofolio = await prisma.portofolio.findFirst({
           where: {
-            id: parseInt(id)
+            id: parseInt(id as string)
           },
           include: {
             users: true,
@@ -88,7 +90,7 @@ export default function handler(req, res) {
 
         const result = await prisma.portofolio.update({
           where: {
-            id: parseInt(id),
+            id: parseInt(id as string),
           },
           data: {
             user_id: portofolio.user_id,
@@ -119,7 +121,7 @@ export default function handler(req, res) {
       try {
         const result = await prisma.portofolio.delete({
           where: {
-            id: parseInt(id),
+            id: parseInt(id as string),
           },
         });
         delete result.id;
@@ -135,13 +137,6 @@ export default function handler(req, res) {
         console.error(error);
         res.status(500).json(responseMsg.INTERNAL_ERROR);
       }
-    } else {
-      res.setHeader("Allow", ["GET", "POST", "PATCH", "PUT", "DELETE"]);
-      responseMsg.BAD_REQUEST = {
-        ...responseMsg.BAD_REQUEST,
-        message: `Method ${req.method} Not Allowed`,
-      };
-      res.status(400).end(responseMsg.BAD_REQUEST);
     }
   });
 }

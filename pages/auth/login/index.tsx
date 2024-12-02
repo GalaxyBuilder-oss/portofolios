@@ -50,6 +50,7 @@ const Login = () => {
       Cookies.set('token', response.data.data.token,{ expires: 1 });
       router.push('/')
     } catch (error) {
+      console.log(error)
       if (error.response) {
         setMessage(error.response.data.message);
       } else {

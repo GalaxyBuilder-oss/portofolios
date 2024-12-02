@@ -129,14 +129,12 @@ const ProfilePage = () => {
 
   const handleProfileImageEdit = () => {
     console.log("tes")
-    // Open a file input or other modal to allow the user to edit the profile image
-    // ...
+    alert("Profile Updated")
   };
 
   const handleCoverImageEdit = () => {
     console.log("tes")
-    // Open a file input or other modal to allow the user to edit the cover image
-    // ...
+    alert("Cover Updated")
   };
 
   return (
@@ -153,7 +151,7 @@ const ProfilePage = () => {
           <div className="overlay">
             <i
               className="bi bi-pencil-square"
-              onClick={handleProfileImageEdit}
+              onClick={handleCoverImageEdit}
             ></i>
           </div>
         </div>

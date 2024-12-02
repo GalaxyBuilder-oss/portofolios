@@ -38,11 +38,11 @@ const Header: React.FC = () => {
       expanded={expanded}
       className="px-2"
     >
-      <Navbar.Brand href="#">
+      <Navbar.Brand href="/">
         <span className="bold">GalaxyBuilder-Oss</span>
       </Navbar.Brand>
       <Navbar.Toggle onClick={() => setExpanded(expanded ? false : true)} />
-      <Navbar.Collapse id="nav-collapse" className="justify-content-between">
+      <Navbar.Collapse id="nav-collapse" className="justify-content-between align-items-center">
         <Nav className="mr-auto">
           <Link href="/" passHref>
             <Nav.Link
@@ -78,7 +78,7 @@ const Header: React.FC = () => {
           </Link>
         </Nav>
         <div className="d-flex gap-2">
-          <Form className="d-flex">
+          <Form className="d-flex gap-2">
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
             <Button variant="outline-light" type="submit">
               Search
@@ -89,7 +89,7 @@ const Header: React.FC = () => {
               <img
                 src="https://images.unsplash.com/photo-1728577740843-5f29c7586afe?q=80&w=1480&auto=format&fit=crop"
                 alt="Avatar"
-                style={{ width: "30px", borderRadius: "50%" }}
+                style={{ width: "38px", borderRadius: "50%" }}
               />
             }
             className="custom-dropdown"
@@ -119,14 +119,14 @@ const Header: React.FC = () => {
                     Masuk
                   </NavDropdown.Item>
                 </Link>
-                <NavDropdown.Item
+                {/* <NavDropdown.Item
                   href="/auth/register"
                   onClick={() => {
                     setExpanded(false);
                   }}
                 >
                   Daftar
-                </NavDropdown.Item>
+                </NavDropdown.Item> */}
               </>
             )}
           </NavDropdown>

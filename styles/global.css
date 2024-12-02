@@ -82,16 +82,8 @@ h2 {
   margin-bottom: 1rem;
 }
 
-.cover-image, .cover-image-container {
-  width: 100%;
-  max-height: 400px;
-  border-radius: 8px;
-  object-fit: cover; /* Maintain aspect ratio */
-  margin-bottom: 0px;
-}
-
 /* Profile */
-.profile-image {
+.profile-image-container .profile-image, .profile-image-container {
   width: 75px;
   height: 75px;
   border-radius: 50%; /* Optional: makes the image circular */
@@ -114,6 +106,9 @@ h2 {
 
 .profile-image-container:hover .overlay, .cover-image-container:hover .overlay{
   opacity: 1;
+}
+.profile-image-container:hover .overlay {
+  border-radius: 50%;
 }
 
 .overlay {

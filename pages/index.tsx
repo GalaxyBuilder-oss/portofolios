@@ -1,5 +1,3 @@
-// components/HomePage.js
-
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import Layout from '../components/Layout';
@@ -20,7 +18,7 @@ const HomePage = () => {
                     <h2 className="text-center mb-4">Fitur Unggulan</h2>
                     <div className="row">
                         <div className="col-md-4">
-                            <Card className="text-center">
+                            <Card className="text-center pt-2">
                                 <Card.Title>Desain Responsif</Card.Title>
                                 <Card.Body>
                                     <i className="bi bi-tablet-landscape" style={{ fontSize: '4rem' }}></i>
@@ -29,7 +27,7 @@ const HomePage = () => {
                             </Card>
                         </div>
                         <div className="col-md-4">
-                            <Card className="text-center">
+                            <Card className="text-center pt-2">
                                 <Card.Title>Keamanan Terjamin</Card.Title>
                                 <Card.Body>
                                     <i className="bi bi-shield-lock" style={{ fontSize: '4rem' }}></i>
@@ -38,7 +36,7 @@ const HomePage = () => {
                             </Card>
                         </div>
                         <div className="col-md-4">
-                            <Card className="text-center">
+                            <Card className="text-center pt-2">
                                 <Card.Title>Mudah Digunakan</Card.Title>
                                 <Card.Body>
                                     <i className="bi bi-gear" style={{ fontSize: '4rem' }}></i>
@@ -52,7 +50,7 @@ const HomePage = () => {
 
             {/* Call to Action */}
             <section className="cta bg-dark text-light text-center py-5">
-                <h2>Siap Membangun Proyek Anda?</h2>
+                <h2 className="text-light">Siap Membangun Proyek Anda?</h2>
                 <p>Hubungi saya sekarang untuk memulai proyek Anda bersama saya.</p>
                 <Button variant="light" size="lg" href="/contact">Hubungi Saya</Button>
             </section>

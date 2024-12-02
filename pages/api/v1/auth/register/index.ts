@@ -4,9 +4,6 @@ import bcrypt from "bcrypt"
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', 'https://galaxybuilder.vercel.app, http://localhost:3000'); // Replace with your frontend URL
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
   if (req.method === "POST") {
     const {
       username,

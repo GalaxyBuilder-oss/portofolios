@@ -4,7 +4,6 @@ import { responseMsg } from "../messages/response";
 export function logger(req, res, next) {
     console.log(`${req.method} ${req.url}`);
     res.setHeader('Access-Control-Allow-Origin', 'https://galaxybuilder.vercel.app');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
     const authorization = req.headers.authorization;
     if (authorization) {
         if (authorization.startsWith("Bearer ")) {

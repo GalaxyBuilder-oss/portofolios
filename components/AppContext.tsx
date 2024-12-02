@@ -9,6 +9,7 @@ import { PortofoliosProps, UsersProps } from "../types";
 import { NextRouter, useRouter } from "next/router";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { PortofolioResponseDto, UserResponseDto } from "../utils/Dto";
 
 // Define the structure of your context
 type AppContextProps = {
@@ -19,6 +20,7 @@ type AppContextProps = {
   router?: NextRouter;
   portofolios?: PortofoliosProps[],
   fetchPortofolios?: () => void;
+  fetchPortofolio?: (id: number, set?: (value: PortofoliosProps) => void) => any;
   timeAgo?: (date: Date) => string;
 };
 
@@ -26,7 +28,7 @@ type AppContextProps = {
 const AppContext = createContext<AppContextProps>({});
 
 // AppProvider component
-const AppProvider = ({ children }: { children: ReactNode }) => {
+const AppProvider: React.FC = ({ children }: { children: ReactNode }) => {
   const [profile, setProfile] = useState<UsersProps>(null);
   const [portofolios, setPortofolios] = useState<PortofoliosProps[]>(null);
   const router = useRouter();
@@ -57,6 +59,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       const cachedData = sessionStorage.getItem("profile");
       if (cachedData) {
         setProfile(JSON.parse(cachedData));
+        return;
       } else {
         const response = await axios.get(`/api/v1/users`, {
           headers: {
@@ -64,24 +67,9 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
           },
         });
 
-        const data = response.data.data;
-        const profileData = {
-          id: parseInt(data.id, 10),
-          fullName: data.full_name,
-          username: data.username,
-          password: "",
-          email: data.email,
-          address: data.address,
-          cover: data.cover_url,
-          createdAt: data.created_at,
-          isActive: data.is_active,
-          isVerified: data.is_verified,
-          phoneNumber: data.phone_number,
-          profilePictureUrl: data.profile_picture_url,
-          updatedAt: data.updated_at,
-        };
-        setProfile(profileData);
-        sessionStorage.setItem("profile", JSON.stringify(profileData));
+        const data = UserResponseDto(response.data.data);
+        setProfile(data);
+        sessionStorage.setItem("profile", JSON.stringify(data));
       }
     } catch (error) {
       throw new Error("Error fetching profile data:", error);
@@ -90,39 +78,8 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchPortofolios = async () => {
     try {
-      const res = await axios.get(`/api/v1/portofolios`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true, // Ensures cookies are sent with the request
-      });
-      const serializedData = res.data.data.map((item) => ({
-        id: item.id,
-        status: item.status,
-        description: item.description,
-        projectName: item.project_name,
-        userId: item.user_id,
-        coverUrl: item.cover_url,
-        budget: item.budget,
-        startDate: item.start_date,
-        endDate: item.end_date,
-        createdAt: item.created_at,
-        updatedAt: item.updated_at,
-        users: {
-          id: item.users.id,
-          username: item.users.username,
-          email: item.users.email,
-          password: item.users.password,
-          fullName: item.users.full_name,
-          phoneNumber: item.users.phone_number,
-          address: item.users.address,
-          profilePictureUrl: item.users.profile_picture_url,
-          createdAt: item.users.created_at,
-          updatedAt: item.users.updated_at,
-          isActive: item.users.is_active,
-          isVerified: item.users.is_verified,
-        },
-      }));
+      const res = await axios.get(`/api/v1/portofolios`);
+      const serializedData = res.data.data.map(PortofolioResponseDto);
       setPortofolios(serializedData);
       sessionStorage.setItem("portofolios", JSON.stringify(serializedData)); // Cache data in sessionStorage
     } catch (error) {
@@ -130,9 +87,20 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const fetchPortofolio = async (id:number, set: (value: PortofoliosProps) => void) => {
+    try {
+      const response = await axios.get(`/api/v1/portofolios/${id}`);
+      const item = PortofolioResponseDto(response.data.data);
+      sessionStorage.setItem("portofolio", JSON.stringify(item));
+      set ? set(item) : item;
+    } catch (error) {
+      console.error("Failed to fetch or process portfolio data:", error);
+    }
+  };
+
   useEffect(() => {
     const cachedData = sessionStorage.getItem("portofolios");
-    if (cachedData) {
+    if (cachedData && token) {
       setPortofolios(JSON.parse(cachedData));
     }
   }, [token]);
@@ -181,7 +149,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AppContext.Provider
-      value={{ profile, defaultProfile, fetchUser, router, token, fetchPortofolios, portofolios, timeAgo }}
+      value={{ profile, defaultProfile, fetchUser, router, token, fetchPortofolios, fetchPortofolio, portofolios, timeAgo }}
     >
       {children}
     </AppContext.Provider>

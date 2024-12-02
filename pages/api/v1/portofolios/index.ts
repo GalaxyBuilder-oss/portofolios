@@ -1,17 +1,13 @@
 import prisma from "../../../../lib/prisma";
 import { responseMsg } from "../../../../messages/response";
 import { logger } from "../../../../middleware/logger";
+import { PortofolioResponseDto } from "../../../../utils/Dto";
 
 export default async function handler(req, res) {
-  logger(req, res, async () => {
-    const { id }: { id: number } = req.user;
-    if (req.method === "GET") {
-      try {
-        const result = await prisma.portofolio.findMany({
-          where: {
-            user_id: id,
-          },
-          include: {
+  if (req.method === "GET") {
+    try {
+      const result = await prisma.portofolio.findMany({
+        include: {
             users: true,
           },
         });
@@ -25,7 +21,10 @@ export default async function handler(req, res) {
         console.error(error);
         res.status(500).json(responseMsg.INTERNAL_ERROR);
       }
-    } else if (req.method === "POST") {
+    } else
+    logger(req, res, async () => {
+    const { id }: { id: number } = req.user;
+    if (req.method === "POST") {
       const { projectName, description, status, budget, startDate, endDate } =
         req.body;
       try {
