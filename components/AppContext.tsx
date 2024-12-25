@@ -20,7 +20,6 @@ type AppContextProps = {
   router?: NextRouter;
   portofolios?: PortofoliosProps[],
   fetchPortofolios?: () => void;
-  fetchPortofolio?: (id: number, set?: (value: PortofoliosProps) => void) => any;
   timeAgo?: (date: Date) => string;
 };
 
@@ -87,17 +86,6 @@ const AppProvider: React.FC = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const fetchPortofolio = async (id:number, set: (value: PortofoliosProps) => void) => {
-    try {
-      const response = await axios.get(`/api/v1/portofolios/${id}`);
-      const item = PortofolioResponseDto(response.data.data);
-      sessionStorage.setItem("portofolio", JSON.stringify(item));
-      set ? set(item) : item;
-    } catch (error) {
-      console.error("Failed to fetch or process portfolio data:", error);
-    }
-  };
-
   useEffect(() => {
     const cachedData = sessionStorage.getItem("portofolios");
     if (cachedData && token) {
@@ -149,7 +137,7 @@ const AppProvider: React.FC = ({ children }: { children: ReactNode }) => {
 
   return (
     <AppContext.Provider
-      value={{ profile, defaultProfile, fetchUser, router, token, fetchPortofolios, fetchPortofolio, portofolios, timeAgo }}
+      value={{ profile, defaultProfile, fetchUser, router, token, fetchPortofolios, portofolios, timeAgo }}
     >
       {children}
     </AppContext.Provider>

@@ -7,6 +7,7 @@ import moment from "moment";
 import Datetime from "react-datetime";
 import axios, { AxiosError } from "axios";
 import { useAppContext } from "../../components/AppContext";
+import { PortofolioResponseDto } from "../../utils/Dto";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   return {
@@ -17,13 +18,24 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 const Portofolio: React.FC<{ id: string }> = ({ id }) => {
-  const { fetchPortofolio, token, router, timeAgo } = useAppContext();
-  const [props, setProps] = useState<PortofoliosProps>(null);
+  const { token, router, timeAgo } = useAppContext();
+  const [props, setProps] = useState<PortofoliosProps>();
   const [editPortofolio, setEditPortofolio] = useState<PortofoliosProps>(props);
   const [showEditModal, setShowEditModal] = useState(false);
 
+  const fetchPortofolio = async (id:number) => {
+    try {
+      const response = await axios.get(`/api/v1/portofolios/${id}`);
+      const item = PortofolioResponseDto(response.data.data);
+      sessionStorage.setItem("portofolio", JSON.stringify(item));
+      setProps(item);
+    } catch (error) {
+      console.error("Failed to fetch or process portfolio data:", error);
+    }
+  };
   useEffect(() => {
-    fetchPortofolio(parseInt(id), setProps);
+    const tes = () => fetchPortofolio(parseInt(id));
+    tes()
   },[]);
 
   const handleInputChange = (
@@ -60,12 +72,12 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
     async (e: React.FormEvent) => {
       e.preventDefault(); // Prevent the default form submission behavior
 
-      // if (!editPortofolio) return;
+      if (!editPortofolio) return;
       // Update the timestamp
       editPortofolio.updatedAt = new Date().toISOString();
 
       try {
-        const response = await axios.patch(
+        const response = await axios.put(
           `/api/v1/portofolios/${id}`,
           editPortofolio,
           {
@@ -168,7 +180,8 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
               <button
                 className="btn btn-dark"
                 onClick={() => {
-                  setEditPortofolio(props ? props : null);
+                  if(props) setEditPortofolio(props) 
+                    else return;
                   setShowEditModal(true);
                 }}
               >

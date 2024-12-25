@@ -1,7 +1,6 @@
 import prisma from "../../../../lib/prisma";
 import { responseMsg } from "../../../../messages/response";
 import { logger } from "../../../../middleware/logger";
-import { PortofolioResponseDto } from "../../../../utils/Dto";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
