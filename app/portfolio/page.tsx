@@ -1,18 +1,21 @@
-import React, { useCallback, useEffect, useState } from "react";
-import Layout from "../../components/Layout";
-import Portofolio from "../../components/Portofolio";
-import { PortofoliosProps, SortOption } from "../../types";
+"use client"
 import axios from "axios";
 import moment from "moment";
+import React, { useCallback, useEffect, useState } from "react";
 import Datetime from "react-datetime";
 import { useAppContext } from "../../components/AppContext";
+import Layout from "../../components/Layout";
+import Portofolio from "../../components/Portofolio";
+import { PortfolioReqDto, PortofoliosProps, SortOption } from "../../types";
+import { PortofolioResponseDto } from "../../utils/Dto";
 
 const Portfolio: React.FC = () => {
-  const { fetchPortofolios, portofolios, router, token } = useAppContext();
-  const [sortedFeed, setSortedFeed] = useState<PortofoliosProps[]>(portofolios);
+  const { router, token } = useAppContext();
+  const [sortedFeed, setSortedFeed] = useState<PortofoliosProps[] | null>(null);
+  const [portofolios, setPortofolios] = useState<PortofoliosProps[] | null>(null);
   const [sortOption, setSortOption] = useState<SortOption>("projectName");
   const [newPortofolio, setNewPortofolio] =
-    useState<PortofoliosProps>(undefined);
+    useState<PortfolioReqDto | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
@@ -22,12 +25,19 @@ const Portfolio: React.FC = () => {
     }
   }, [portofolios]);
 
-  const fetchingCallback = useCallback(() => {
-    fetchPortofolios();
-  }, []);
+  const fetchPortofolios = async () => {
+      try {
+        const res = await axios.get(`/api/v2/portfolios`);
+        const serializedData = res.data.data.map(PortofolioResponseDto);
+        setPortofolios(serializedData);
+        sessionStorage.setItem("portofolios", JSON.stringify(serializedData)); // Cache data in sessionStorage
+      } catch (error) {
+        console.error("Failed to fetch or process portfolio data:", error);
+      }
+    };
 
   useEffect(() => {
-    fetchingCallback();
+    fetchPortofolios();
   }, []);
 
   useEffect(() => {
@@ -35,7 +45,7 @@ const Portfolio: React.FC = () => {
   }, [sortOption, portofolios]);
 
   const sortPortfolios = () => {
-    let sorted = [...portofolios];
+    let sorted = [...portofolios ?? []];
 
     switch (sortOption) {
       case "projectName":
@@ -44,25 +54,25 @@ const Portfolio: React.FC = () => {
       case "createdAt":
         sorted.sort(
           (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            new Date(b.createdAt as string).getTime() - new Date(a.createdAt as string).getTime()
         );
         break;
       case "updateAt":
         sorted.sort(
           (a, b) =>
-            new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+            new Date(b.updatedAt as string).getTime() - new Date(a.updatedAt as string).getTime()
         );
         break;
       case "startDate":
         sorted.sort(
           (a, b) =>
-            new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+            new Date(a.startDate as string).getTime() - new Date(b.startDate as string).getTime()
         );
         break;
       case "endDate":
         sorted.sort(
           (a, b) =>
-            new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
+            new Date(a.endDate as string).getTime() - new Date(b.endDate as string).getTime()
         );
         break;
       default:
@@ -76,43 +86,37 @@ const Portfolio: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setNewPortofolio({
-      ...newPortofolio,
+    setNewPortofolio((prev)=>prev?{
+      ...prev,
       [name]: value,
-    });
+    }:null);
   };
 
   const handleStartDateChange = (date: string | moment.Moment) => {
     const formattedDate = moment.isMoment(date)
       ? date.toDate()
       : new Date(date);
-    setNewPortofolio({
-      ...newPortofolio,
+    setNewPortofolio((prev)=>prev?{
+      ...prev,
       startDate: formattedDate.toISOString(),
-    });
+    }:null);
   };
 
   const handleEndDateChange = (date: string | moment.Moment) => {
     const formattedDate = moment.isMoment(date)
       ? date.toDate()
       : new Date(date);
-    setNewPortofolio({
-      ...newPortofolio,
+    setNewPortofolio((prev)=>prev?{
+      ...prev,
       endDate: formattedDate.toISOString(),
-    });
+    }:null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    newPortofolio.updatedAt = new Date().toISOString();
 
     try {
-      const response = await axios.post(`/api/v1/portofolios`, newPortofolio, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post("/api/v2/portfolios", newPortofolio);
 
       const result = response.data; // Axios automatically parses JSON
 
@@ -120,7 +124,7 @@ const Portfolio: React.FC = () => {
         setShowAddModal(false);
         sessionStorage.removeItem("portofolios");
         sessionStorage.removeItem("portofolio");
-        router.reload(); // Optionally, you might want to handle this more gracefully
+        router?.reload(); // Optionally, you might want to handle this more gracefully
       } else {
         console.log("Failed to add portfolio.");
       }
@@ -149,6 +153,20 @@ const Portfolio: React.FC = () => {
               <option value="endDate">Tanggal Selesai</option>
             </select>
           </div>
+          {/* <div
+              className="btn-group"
+              role="group"
+              aria-label="this for button"
+            >
+              <button
+                className="btn btn-dark"
+                onClick={() => {
+                  setShowAddModal(true);
+                }}
+              >
+                Add
+              </button>
+            </div> */}
           {token && (
             <div
               className="btn-group"
@@ -214,7 +232,7 @@ const Portfolio: React.FC = () => {
                       value={
                         newPortofolio?.startDate
                           ? moment(newPortofolio.startDate)
-                          : null
+                          : undefined
                       }
                       onChange={handleStartDateChange}
                       dateFormat="YYYY-MM-DD"
@@ -228,7 +246,7 @@ const Portfolio: React.FC = () => {
                       value={
                         newPortofolio?.endDate
                           ? moment(newPortofolio.endDate)
-                          : null
+                          : undefined
                       }
                       onChange={handleEndDateChange}
                       dateFormat="YYYY-MM-DD"

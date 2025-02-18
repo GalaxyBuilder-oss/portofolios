@@ -1,29 +1,9 @@
-import { PropsWithChildren, useEffect, useState } from "react";
-import Layout from "../../../components/Layout";
+"use client";
+import axios from "axios";
 import Cookies from "js-cookie";
-import { useRouter } from "next/router";
-import axios from "axios"
-
-// export const getServerSideProps: GetServerSideProps = async () => {
-  // const result = await prisma.users.findMany();
-  // const serializedData = result.map((item) => ({
-  //   ...item,
-  //   fullName: item.full_name,
-  //   createdAt: item.created_at.toISOString(),
-  //   updatedAt: item.updated_at.toISOString(),
-  //   phoneNumber: item.phone_number,
-  //   profilePictureUrl: item.profile_picture_url,
-  //   isActive: item.is_active,
-  //   isVerified: item.is_verified,
-  // }));
-  // const finalData: UsersProps[] = serializedData;
-
-  // return {
-  //   props: {
-  //     portofolios: finalData,
-  //   },
-  // };
-// };
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Layout from "../../../components/Layout";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -31,8 +11,7 @@ const Login = () => {
     password: "",
   });
   const [message, setMessage] = useState("");
-  const router = useRouter();
-
+const router = useRouter();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -42,13 +21,14 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/v1/auth/login', form, {
+      const response = await axios.post('/api/v2/auth/login', form, {
         headers: { 'Content-Type': 'application/json' },
       });
 
+      console.log(response.data.data);
       // Assuming the response contains a token
       Cookies.set('token', response.data.data.token,{ expires: 1 });
-      router.push('/')
+      router?.push('/')
     } catch (error) {
       console.log(error)
       if (error.response) {
@@ -65,7 +45,7 @@ const Login = () => {
 
     // If the token exists, redirect to the homepage
     if (token) {
-      router.push("/");
+      router?.push("/");
     }
   }, [router]);
   return (
@@ -119,34 +99,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// async function isValidLogin(
-//   form: { username: string; password: string },
-//   props: UsersProps[],
-//   setMessage: (value: string) => void
-// ) {
-//   const isUser = props.find((user) => user.username === form.username);
-
-//   // Check if user exists
-//   if (!isUser) {
-//     setMessage("User tidak dapat ditemukan");
-//     return false;
-//   }
-
-//   try {
-//     // Verify the password
-//     const isValid = await argon2.verify(isUser.password, form.password);
-//     if (!isValid) {
-//       setMessage("Yahh! Login gagal");
-//       return false;
-//     }
-//   } catch (error) {
-//     // Handle any errors during verification
-//     console.error("Error verifying password:", error);
-//     setMessage("Yahh! Terjadi kesalahan saat memverifikasi password");
-//     return false;
-//   }
-
-//   setMessage("Yeay! Login berhasil");
-//   return true;
-// }

@@ -1,3 +1,7 @@
+"use client";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import {
   createContext,
   ReactNode,
@@ -6,19 +10,16 @@ import {
   useState,
 } from "react";
 import { PortofoliosProps, UsersProps } from "../types";
-import { NextRouter, useRouter } from "next/router";
-import Cookies from "js-cookie";
-import axios from "axios";
 import { PortofolioResponseDto, UserResponseDto } from "../utils/Dto";
 
 // Define the structure of your context
 type AppContextProps = {
-  profile?: UsersProps;
+  profile?: UsersProps|null;
   defaultProfile?: UsersProps;
   fetchUser?: () => void;
   token?: string;
-  router?: NextRouter;
-  portofolios?: PortofoliosProps[],
+  router?: any;
+  portofolios?: PortofoliosProps[] |null,
   fetchPortofolios?: () => void;
   timeAgo?: (date: Date) => string;
 };
@@ -28,8 +29,8 @@ const AppContext = createContext<AppContextProps>({});
 
 // AppProvider component
 const AppProvider: React.FC = ({ children }: { children: ReactNode }) => {
-  const [profile, setProfile] = useState<UsersProps>(null);
-  const [portofolios, setPortofolios] = useState<PortofoliosProps[]>(null);
+  const [profile, setProfile] = useState<UsersProps | null>();
+  const [portofolios, setPortofolios] = useState<PortofoliosProps[] | null>(null);
   const router = useRouter();
   const token = Cookies.get("token");
 
@@ -60,7 +61,7 @@ const AppProvider: React.FC = ({ children }: { children: ReactNode }) => {
         setProfile(JSON.parse(cachedData));
         return;
       } else {
-        const response = await axios.get(`/api/v1/users`, {
+        const response = await axios.get(`/api/v2/users`, {
           headers: {
             authorization: `Bearer ${token}`,
           },
@@ -77,7 +78,7 @@ const AppProvider: React.FC = ({ children }: { children: ReactNode }) => {
 
   const fetchPortofolios = async () => {
     try {
-      const res = await axios.get(`/api/v1/portofolios`);
+      const res = await axios.get(`/api/v2/portfolios`);
       const serializedData = res.data.data.map(PortofolioResponseDto);
       setPortofolios(serializedData);
       sessionStorage.setItem("portofolios", JSON.stringify(serializedData)); // Cache data in sessionStorage

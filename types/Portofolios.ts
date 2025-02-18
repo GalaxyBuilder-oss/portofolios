@@ -14,3 +14,13 @@ export type PortofoliosProps = {
   coverUrl?: string | null;
   users?: UsersProps | null;
 };
+
+export type PortfolioReqDto = {
+  projectName: string;
+  description: string;
+  status: string;
+  budget?: number;
+  startDate: string;
+  endDate: string;
+  coverUrl?: File;
+}

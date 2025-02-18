@@ -1,23 +1,24 @@
-import React from "react";
-import Link from "next/link";
-import { useState } from "react";
+"use client";
+import Cookies from "js-cookie";
+import React, { useState } from "react";
 import {
-  Navbar,
-  Nav,
-  NavDropdown,
+  Button,
   Form,
   FormControl,
-  Button,
+  Nav,
+  Navbar,
+  NavDropdown,
 } from "react-bootstrap";
-import { useRouter } from "next/router";
-import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const Header: React.FC = () => {
   const router = useRouter();
+  const token = Cookies.get("token");
   const [expanded, setExpanded] = useState(false);
-  const token: string = Cookies.get("token");
+  const urlpath = usePathname();
   const isActive: (pathname: string) => boolean = (pathname) =>
-    router.pathname === pathname;
+    urlpath === pathname;
 
   const handleLogout = () => {
     // Menghapus token dari cookies
@@ -27,7 +28,7 @@ const Header: React.FC = () => {
     sessionStorage.removeItem("profile");
 
     // Redirect ke halaman login atau homepage
-    router.push("/auth/login"); // Ganti dengan halaman yang diinginkan
+    router?.push("/auth/login"); // Ganti dengan halaman yang diinginkan
   };
 
   return (
@@ -36,46 +37,49 @@ const Header: React.FC = () => {
       data-bs-theme="dark"
       expand="lg"
       expanded={expanded}
-      className="px-2"
+      className="px-2 text-light normal"
     >
       <Navbar.Brand href="/">
         <span className="bold">GalaxyBuilder-Oss</span>
       </Navbar.Brand>
       <Navbar.Toggle onClick={() => setExpanded(expanded ? false : true)} />
-      <Navbar.Collapse id="nav-collapse" className="justify-content-between align-items-center">
+      <Navbar.Collapse
+        id="nav-collapse"
+        className="justify-content-between align-items-center"
+      >
         <Nav className="mr-auto">
-          <Link href="/" passHref>
-            <Nav.Link
-              onClick={() => setExpanded(false)}
-              disabled={isActive("/")}
-            >
-              Home
-            </Nav.Link>
-          </Link>
-          <Link href="/portofolio" passHref>
-            <Nav.Link
-              onClick={() => setExpanded(false)}
-              disabled={isActive("/portofolio")}
-            >
-              Portofolio
-            </Nav.Link>
-          </Link>
-          <Link href="/about" passHref>
-            <Nav.Link
-              onClick={() => setExpanded(false)}
-              disabled={isActive("/about")}
-            >
-              Tentang
-            </Nav.Link>
-          </Link>
-          <Link href="/contact" passHref>
-            <Nav.Link
-              onClick={() => setExpanded(false)}
-              disabled={isActive("/contact")}
-            >
-              Kontak
-            </Nav.Link>
-          </Link>
+          <Nav.Link
+            href="/"
+            onClick={() => setExpanded(false)}
+            active={isActive("/")}
+            className="text-light text-decoration-none"
+          >
+            Home
+          </Nav.Link>
+          <Nav.Link
+            href="/portfolio"
+            onClick={() => setExpanded(false)}
+            active={isActive("/portfolio")}
+            className="text-light text-decoration-none"
+          >
+            Portfolio
+          </Nav.Link>
+          <Nav.Link
+            href="/about"
+            onClick={() => setExpanded(false)}
+            active={isActive("/about")}
+            className="text-light text-decoration-none"
+          >
+            About
+          </Nav.Link>
+          <Nav.Link
+            href="/contact"
+            onClick={() => setExpanded(false)}
+            active={isActive("/contact")}
+            className="text-light text-decoration-none"
+          >
+            Contact
+          </Nav.Link>
         </Nav>
         <div className="d-flex gap-2">
           <Form className="d-flex gap-2">
@@ -87,46 +91,44 @@ const Header: React.FC = () => {
           <NavDropdown
             title={
               <img
-                src="https://images.unsplash.com/photo-1728577740843-5f29c7586afe?q=80&w=1480&auto=format&fit=crop"
+                src="https://portofolio2024.s3.ap-southeast-1.amazonaws.com/default_profile_photo.jpg"
                 alt="Avatar"
                 style={{ width: "38px", borderRadius: "50%" }}
               />
             }
             className="custom-dropdown"
             id="nav-dropdown"
+            align="end"
           >
             {token ? (
               <>
-                <Link href="/profile" passHref>
-                  <NavDropdown.Item onClick={() => setExpanded(false)}>
-                    Profile
-                  </NavDropdown.Item>
-                </Link>
                 <NavDropdown.Item
-                  href="#"
+                  href="/profile"
+                  onClick={() => setExpanded(false)}
+                  className="text-light text-decoration-none"
+                >
+                  Profile
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  // href="#"
                   onClick={() => {
                     setExpanded(false);
                     handleLogout();
                   }}
+                  className="text-light text-decoration-none"
                 >
                   Sign Out
                 </NavDropdown.Item>
               </>
             ) : (
               <>
-                <Link href="/auth/login" passHref>
-                  <NavDropdown.Item onClick={() => setExpanded(false)}>
-                    Masuk
-                  </NavDropdown.Item>
-                </Link>
-                {/* <NavDropdown.Item
-                  href="/auth/register"
-                  onClick={() => {
-                    setExpanded(false);
-                  }}
+                <NavDropdown.Item
+                  href="/auth/login"
+                  onClick={() => setExpanded(false)}
+                  className="text-light text-decoration-none"
                 >
-                  Daftar
-                </NavDropdown.Item> */}
+                  Login
+                </NavDropdown.Item>
               </>
             )}
           </NavDropdown>

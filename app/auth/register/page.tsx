@@ -1,8 +1,8 @@
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
-import { useRouter } from "next/router";
-import Cookies from "js-cookie"
-import axios from "axios";
 
 interface RegisterFormState {
   username: string;
@@ -34,7 +34,7 @@ const Register: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Registration submitted:", form);
-    // const response = await axios.post('/api/v1/auth/register', form,{})
+    const response = await axios.post('/api/v2/auth/register', form,{})
     alert("Registration successful!");
     // Reset form
     setForm({
@@ -51,7 +51,7 @@ const Register: React.FC = () => {
   useEffect(() => {
     // Check if the token exists
     const token = Cookies.get("token");
-    
+
     // If the token exists, redirect to the homepage
     if (token) {
       router.push("/");
@@ -118,7 +118,7 @@ const Register: React.FC = () => {
               required
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="phoneNumber">Nomor Telepon</label>
             <input

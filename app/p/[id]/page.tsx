@@ -1,31 +1,26 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { GetServerSideProps } from "next";
-import ReactMarkdown from "react-markdown";
-import Layout from "../../components/Layout";
-import { PortofoliosProps } from "../../types";
+"use client";
+import axios from "axios";
 import moment from "moment";
+import React, { useCallback, useEffect, useState } from "react";
 import Datetime from "react-datetime";
-import axios, { AxiosError } from "axios";
-import { useAppContext } from "../../components/AppContext";
-import { PortofolioResponseDto } from "../../utils/Dto";
+import ReactMarkdown from "react-markdown";
+import { useAppContext } from "../../../components/AppContext";
+import Layout from "../../../components/Layout";
+import { PortofoliosProps } from "../../../types";
+import { PortofolioResponseDto } from "../../../utils/Dto";
+import { useParams } from "next/navigation";
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  return {
-    props: {
-      id: params.id, // Directly return the id
-    },
-  };
-};
 
-const Portofolio: React.FC<{ id: string }> = ({ id }) => {
+const Portofolio: React.FC = () => {
   const { token, router, timeAgo } = useAppContext();
   const [props, setProps] = useState<PortofoliosProps>();
-  const [editPortofolio, setEditPortofolio] = useState<PortofoliosProps>(props);
+  const [editPortofolio, setEditPortofolio] = useState<PortofoliosProps | null>(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const id = useParams().id as string;
 
   const fetchPortofolio = async (id:number) => {
     try {
-      const response = await axios.get(`/api/v1/portofolios/${id}`);
+      const response = await axios.get(`/api/v2/portfolios/${id}`);
       const item = PortofolioResponseDto(response.data.data);
       sessionStorage.setItem("portofolio", JSON.stringify(item));
       setProps(item);
@@ -34,38 +29,37 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
     }
   };
   useEffect(() => {
-    const tes = () => fetchPortofolio(parseInt(id));
-    tes()
+    if(id) fetchPortofolio(parseInt(id));
   },[]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setEditPortofolio({
-      ...editPortofolio,
+    setEditPortofolio((prev) => prev ? {
+      ...prev,
       [name]: value,
-    });
+    } : null);
   };
 
   const handleStartDateChange = (date: string | moment.Moment) => {
     const formattedDate = moment.isMoment(date)
       ? date.toDate()
       : new Date(date);
-    setEditPortofolio({
-      ...editPortofolio,
+    setEditPortofolio((prev) => prev ? {
+      ...prev,
       startDate: formattedDate.toISOString(),
-    });
+    } : null);
   };
 
   const handleEndDateChange = (date: string | moment.Moment) => {
     const formattedDate = moment.isMoment(date)
       ? date.toDate()
       : new Date(date);
-    setEditPortofolio({
-      ...editPortofolio,
+    setEditPortofolio((prev) => prev ? {
+      ...prev,
       endDate: formattedDate.toISOString(),
-    });
+    } : null);
   };
 
   const handleSubmit = useCallback(
@@ -78,7 +72,7 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
 
       try {
         const response = await axios.put(
-          `/api/v1/portofolios/${id}`,
+          `/api/v2/portfolios/${id}`,
           editPortofolio,
           {
             headers: {
@@ -93,7 +87,7 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
           setShowEditModal(false);
           sessionStorage.removeItem("portofolios");
           sessionStorage.removeItem("portofolio");
-          router.push("/portofolio"); // Navigate after successful update
+          router?.push("/portofolio"); // Navigate after successful update
         } else {
           console.log("Failed to update portfolio.");
         }
@@ -108,7 +102,7 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
     if (!confirm("Anda yakin ingin menghapus ini?")) return;
 
     try {
-      const response = await axios.delete(`/api/v1/portofolios/${id}`, {
+      const response = await axios.delete(`/api/v1/portfolios/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -120,7 +114,7 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
       if (result.success) {
         sessionStorage.removeItem("portofolios");
         sessionStorage.removeItem("portofolio");
-        router.push("/portofolio"); // Redirect to portfolio page
+        router?.push("/portofolio"); // Redirect to portfolio page
       } else {
         console.log("Failed to delete portfolio.");
       }
@@ -137,12 +131,12 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
       <div className="portfolio-page">
         <h2>
           {props?.projectName || "Loading..."}{" "}
-          {props?.status.match("ongoing") && "(Ongoing)"}
+          {props?.status?.match("ongoing") && "(Ongoing)"}
         </h2>
         <p className="author">By {props?.users?.username || "Unknown User"}</p>
         {props?.coverUrl && (
           <img
-            src={props?.coverUrl}
+            src={props?.coverUrl ?? "https://portofolio2024.s3.amazonaws.com/default_project_thumbnail.png"}
             alt={props?.projectName}
             className="cover-image"
           />
@@ -150,11 +144,11 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
         <div>
           <p>
             <i className="bi bi-calendar"></i> Projek Mulai :{" "}
-            {props?.startDate && timeAgo(new Date(props.startDate))}
+            {props?.startDate && timeAgo && timeAgo(new Date(props.startDate))}
           </p>
           <p>
             <i className="bi bi-calendar"></i> Projek Selesai :{" "}
-            {props?.endDate && timeAgo(new Date(props.endDate))}
+            {props?.endDate && timeAgo && timeAgo(new Date(props.endDate))}
           </p>
           <p>
             <i className="bi bi-calendar"></i> Lama Projek :{" "}
@@ -170,17 +164,17 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
           <p>
             <i className="bi bi-calendar"></i> Terakhir Update :{" "}
             {props?.updatedAt
-              ? timeAgo(new Date(props.updatedAt))
+              ? timeAgo && timeAgo(new Date(props.updatedAt))
               : " Belum Di Update"}
           </p>
-          <ReactMarkdown>{props?.description}</ReactMarkdown>
+          <ReactMarkdown>{props?.description ?? ""}</ReactMarkdown>
 
           {token && (
             <div className="btn-group" role="group">
               <button
                 className="btn btn-dark"
                 onClick={() => {
-                  if(props) setEditPortofolio(props) 
+                  if(props) setEditPortofolio(props)
                     else return;
                   setShowEditModal(true);
                 }}
@@ -189,7 +183,7 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
               </button>
               <button
                 className="btn btn-secondary-dark"
-                onClick={() => handleDelete(props?.id)}
+                onClick={() => handleDelete(props?.id as number)}
               >
                 Hapus
               </button>
@@ -235,7 +229,7 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
                       value={
                         editPortofolio?.startDate
                           ? moment(editPortofolio.startDate)
-                          : null
+                          : undefined
                       }
                       onChange={handleStartDateChange}
                       dateFormat="YYYY-MM-DD"
@@ -250,7 +244,7 @@ const Portofolio: React.FC<{ id: string }> = ({ id }) => {
                       value={
                         editPortofolio?.endDate
                           ? moment(editPortofolio.endDate)
-                          : null
+                          : undefined
                       }
                       onChange={handleEndDateChange}
                       dateFormat="YYYY-MM-DD"

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Router from "next/router";
 import ReactMarkdown from "react-markdown";
 import { Card, Button } from "react-bootstrap"; // Assuming you're using Bootstrap for styling
 import { PortofoliosProps } from "../types";
@@ -39,24 +38,25 @@ const Portofolio: React.FC<{ portofolio: PortofoliosProps }> = ({
   };
 
   const endDateDisplay = isHovered
-    ? `Berakhir tanggal ${formatDate(new Date(portofolio.endDate))}`
-    : timeAgo(new Date(portofolio.endDate));
+    ? `Berakhir tanggal ${formatDate(new Date(portofolio.endDate as string))}`
+    : timeAgo && timeAgo(new Date(portofolio.endDate  as string));
 
   return (
     <Card
       className="portfolio-card"
-      onClick={() => Router.push("/p/[id]", `/p/${portofolio.id}`)}
+      onClick={(e) => {
+      e.stopPropagation();
+      location.href = `/p/${portofolio.id}`;
+      }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {portofolio.coverUrl && (
-        <Card.Img
-          variant="top"
-          src={portofolio.coverUrl}
-          alt={portofolio.projectName}
-          style={{ height: 125 + "px", objectFit: "contain" }}
-        />
-      )}
+      <Card.Img
+        variant="top"
+        src={portofolio.coverUrl ?? "https://portofolio2024.s3.amazonaws.com/default_project_thumbnail.png"}
+        alt={portofolio.projectName}
+        style={{ height: 125 + "px", objectFit: "contain" }}
+      />
       <Card.Body>
         <Card.Title>{portofolio.projectName}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
@@ -65,10 +65,13 @@ const Portofolio: React.FC<{ portofolio: PortofoliosProps }> = ({
         <Card.Subtitle className="mb-2 text-muted">
           {endDateDisplay}
         </Card.Subtitle>
-        <ReactMarkdown>{portofolio.description}</ReactMarkdown>
+        <ReactMarkdown>{portofolio.description ?? ""}</ReactMarkdown>
         <Button
           variant="dark"
-          onClick={() => Router.push("/p/[id]", `/p/${portofolio.id}`)}
+          onClick={(e) => {
+            e.stopPropagation();
+            location.href = `/p/${portofolio.id}`;
+          }}
         >
           View Project
         </Button>

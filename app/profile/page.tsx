@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { Button, Modal, Alert, Form, FloatingLabel } from "react-bootstrap";
+"use client";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Alert, Button, FloatingLabel, Form, Modal } from "react-bootstrap";
+import { useAppContext } from "../../components/AppContext";
 import Layout from "../../components/Layout";
 import { UsersProps } from "../../types";
-import axios from "axios";
-import { useAppContext } from "../../components/AppContext";
 
 const ProfilePage = () => {
   const { router, token } = useAppContext()
-  const [profile, setProfile] = useState<UsersProps>(null);
+  const [profile, setProfile] = useState<UsersProps | null>(null);
   const [defaultProfile] = useState<UsersProps>({
     id: 0,
-    fullName: "Salim Hidayat",
-    username: "salim26",
+    fullName: "Lorem Ipsum",
+    username: "john_doe",
     email: "email@example.com",
     phoneNumber: "123-456-7890",
     address: "Alamat Anda",
     profilePictureUrl:
-      "https://images.unsplash.com/photo-1728577740843-5f29c7586afe?q=80&w=1480&auto=format&fit=crop",
+      "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/default_profile_photo.jpg",
     cover:
-      "https://images.unsplash.com/photo-1658579222223-ca243ef7c520?q=80&w=1470&auto=format&fit=crop",
+      "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/default_background_cover.jpg",
     isActive: true,
     isVerified: true,
     createdAt: Date.toString(),
@@ -33,7 +34,7 @@ const ProfilePage = () => {
   useEffect(() => {
     // If the token exists, redirect to the homepage
     if (!token) {
-      router.push("/auth/login");
+      router?.push("/auth/login");
     }
   }, [router]);
 
@@ -45,13 +46,12 @@ const ProfilePage = () => {
           setProfile(JSON.parse(cachedData));
           setEditProfile(JSON.parse(cachedData));
         } else {
-          const response = await axios.get(`/api/v1/users`, {
+          const response = await axios.get(`/api/v2/users`, {
             headers: {
               authorization: `Bearer ${token}`,
             },
           });
-
-          const data = response.data.data;
+          const data = response.data.data[0];
           const profileData = {
             id: parseInt(data.id, 10),
             fullName: data.full_name,
@@ -105,7 +105,7 @@ const ProfilePage = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.put(`/api/v1/users`, editProfile, {
+      const response = await axios.put(`/api/v2/users`, editProfile, {
         headers: {
           authorization: `Bearer ${token}`
         }
@@ -115,7 +115,7 @@ const ProfilePage = () => {
         throw new Error("Failed to update profile");
       }
 
-      setProfile(editProfile);
+      setProfile(editProfile as UsersProps);
       setAlertMessage("Profil berhasil diperbarui");
       setAlertVariant("success");
       setShowEditModal(false);
@@ -184,7 +184,7 @@ const ProfilePage = () => {
             variant="dark"
             onClick={() => {
               setShowEditModal(true);
-              setEditProfile(profile);
+              setEditProfile(profile as UsersProps);
             }}
           >
             Edit Profil
@@ -232,7 +232,7 @@ const ProfilePage = () => {
               <FloatingLabel controlId="phone" label="Nomor Telepon" className="mb-3">
                 <Form.Control
                   type="text"
-                  value={editProfile.phoneNumber}
+                  value={editProfile.phoneNumber as string}
                   onChange={(e) =>
                     setEditProfile({
                       ...editProfile,
@@ -245,7 +245,7 @@ const ProfilePage = () => {
               <FloatingLabel controlId="address" label="Alamat" className="mb-3">
                 <Form.Control
                   type="text"
-                  value={editProfile.address}
+                  value={editProfile.address as string}
                   onChange={(e) =>
                     setEditProfile({ ...editProfile, address: e.target.value })
                   }
