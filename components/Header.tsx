@@ -88,7 +88,7 @@ const Header: React.FC = () => {
               Search
             </Button>
           </Form>
-          <NavDropdown
+          {/* <NavDropdown
             title={
               <img
                 src="https://portofolio2024.s3.ap-southeast-1.amazonaws.com/default_profile_photo.jpg"
@@ -131,7 +131,7 @@ const Header: React.FC = () => {
                 </NavDropdown.Item>
               </>
             )}
-          </NavDropdown>
+          </NavDropdown> */}
         </div>
       </Navbar.Collapse>
     </Navbar>

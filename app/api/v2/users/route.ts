@@ -19,11 +19,10 @@ export async function GET(req: NextRequest) {
             message: "Yeay! Berhasil mendapatkan data",
             data: result,
         };
-        console.log(result);
-        return NextResponse.json(responseMsg.OK);
+        return NextResponse.json(responseMsg.OK, { status: 200 });
     } catch (error) {
         console.error(error);
-        return NextResponse.json(responseMsg.INTERNAL_ERROR);
+        return NextResponse.json(responseMsg.INTERNAL_ERROR, { status: 500 });
     }
 }
 async function verify(token: string, secret: string): Promise<any> {

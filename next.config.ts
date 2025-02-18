@@ -1,8 +1,19 @@
 import { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  pageExtensions: ['ts', 'tsx'],
   experimental: {
-    turbo: true,
+    turbo: {
+      resolveExtensions: [
+        '.mdx',
+        '.tsx',
+        '.ts',
+        '.jsx',
+        '.js',
+        '.mjs',
+        '.json',
+      ],
+    },
   },
   reactStrictMode: false,
 };

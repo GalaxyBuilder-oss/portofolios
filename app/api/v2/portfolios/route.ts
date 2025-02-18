@@ -6,6 +6,7 @@ import {
 import prisma from "../../../../lib/prisma";
 import { responseMsg } from "../../../../messages/response";
 import { NextRequest, NextResponse } from 'next/server';
+import { jwtVerify } from "jose";
 
 const Bucket = process.env.AMPLIFY_BUCKET;
 const s3 = new S3Client({
@@ -36,23 +37,23 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const id = parseInt(searchParams.get('id') || '0', 10);
+  const token = req.headers.get("cookie")?.split("=")[1];
   const { projectName, description, status, budget, startDate, endDate, coverUrl } = await req.json();
   try {
+    const payload = await verify(token as string, process.env.SECRET_KEY as string);
     const isExisted = await prisma.portofolio.findFirst({
       where: {
         AND: [
           {
             project_name: projectName,
           },
-          { user_id: id },
+          { user_id: payload.id },
         ],
       },
     });
     if (isExisted) {
       responseMsg.BAD_REQUEST.message = "Yahh! Projek telah ada di database";
-      return NextResponse.json(responseMsg.BAD_REQUEST, { status: 400 });
+      return NextResponse.json(responseMsg.BAD_REQUEST);
     }
     const isValidDate = Date.parse(startDate) < Date.parse(endDate);
     if (!isValidDate) {
@@ -83,18 +84,25 @@ export async function POST(req: NextRequest) {
         created_at: new Date(),
         updated_at: null,
         cover_url: coverUrl ? response(coverUrl) : null,
-        user_id: id,
+        user_id: payload.id,
       },
     });
 
     responseMsg.OK = {
       ...responseMsg.OK,
       message: "Yeay! Berhasil menambahkan data",
-      data: result,
+      data: result
     };
     return NextResponse.json(responseMsg.OK, { status: 201 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(responseMsg.INTERNAL_ERROR, { status: 500 });
   }
+}
+async function verify(token: string, secret: string): Promise<any> {
+    const {payload} = await jwtVerify(token, new TextEncoder().encode(secret));
+    // run some checks on the returned payload, perhaps you expect some specific values
+
+    // if its all good, return it, or perhaps just return a boolean
+    return payload;
 }

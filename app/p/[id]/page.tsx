@@ -5,18 +5,17 @@ import React, { useCallback, useEffect, useState } from "react";
 import Datetime from "react-datetime";
 import ReactMarkdown from "react-markdown";
 import { useAppContext } from "../../../components/AppContext";
-import Layout from "../../../components/Layout";
 import { PortofoliosProps } from "../../../types";
 import { PortofolioResponseDto } from "../../../utils/Dto";
 import { useParams } from "next/navigation";
 
 
-const Portofolio: React.FC = () => {
+const Portofolio = () => {
   const { token, router, timeAgo } = useAppContext();
   const [props, setProps] = useState<PortofoliosProps>();
   const [editPortofolio, setEditPortofolio] = useState<PortofoliosProps | null>(null);
   const [showEditModal, setShowEditModal] = useState(false);
-  const id = useParams().id as string;
+  const id = useParams()?.id as string;
 
   const fetchPortofolio = async (id:number) => {
     try {
@@ -124,10 +123,7 @@ const Portofolio: React.FC = () => {
   };
 
   return (
-    <Layout
-      title={`${props?.projectName || "Loading..."} | GalaxyBuilder-Oss`}
-      description={`This post is about ${props?.projectName || "Loading..."}`}
-    >
+    <>
       <div className="portfolio-page">
         <h2>
           {props?.projectName || "Loading..."}{" "}
@@ -319,7 +315,7 @@ const Portofolio: React.FC = () => {
           </div>
         </div>
       )}
-    </Layout>
+    </>
   );
 };
 

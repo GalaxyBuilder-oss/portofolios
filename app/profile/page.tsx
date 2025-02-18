@@ -138,7 +138,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <Layout title="Profile | GalaxyBuilder-Oss">
+    <>
       <section className="profile-page container py-5">
         {/* Cover Image */}
         <div className="cover-image-container">
@@ -273,7 +273,7 @@ const ProfilePage = () => {
           </Alert>
         )}
       </section>
-    </Layout>
+    </>
   );
 };
 

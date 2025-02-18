@@ -1,5 +1,17 @@
 import { UsersProps } from "./Users";
 
+export type LocalPortofoliosProps = {
+  id: number;
+  projectName: string;
+  description?: string | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  status?: string;
+  budget?: number | null;
+  coverUrl?: string | null;
+  githubLink: string;
+};
+
 export type PortofoliosProps = {
   id: number;
   userId: number;

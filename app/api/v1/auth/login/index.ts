@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import prisma from "../../../../../lib/prisma";
 import { responseMsg } from "../../../../../messages/response";
 import bcrypt from "bcrypt"
@@ -12,8 +11,6 @@ export default async function handler(req, res) {
           id: parseInt(id),
         },
       });
-      delete result.id;
-      delete result.password;
       responseMsg.OK = {
         ...responseMsg.OK,
         data: result,
@@ -27,7 +24,7 @@ export default async function handler(req, res) {
     const { username, password } = req.body;
     try {
       const data = {
-        token: null,
+        token: "",
       };
       const result = await prisma.users.findFirst({
         where: {
@@ -45,13 +42,10 @@ export default async function handler(req, res) {
         res.status(400).send(responseMsg.BAD_REQUEST);
         return;
       }
-      data.token = jwt.sign(
-        { id: result.id, username: result.username },
-        process.env.SECRET_KEY,
-        {
-          expiresIn: "1d",
-        }
-      );
+      if (!process.env.SECRET_KEY) {
+        throw new Error("SECRET_KEY is not defined");
+      }
+
       responseMsg.OK = {
         ...responseMsg.OK,
         message: "Yeay! Berhasil Login",

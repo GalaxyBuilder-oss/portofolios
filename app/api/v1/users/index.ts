@@ -1,6 +1,5 @@
 import prisma from "../../../../lib/prisma";
 import { responseMsg } from "../../../../messages/response";
-import { logger } from "../../../../middleware/logger";
 import bcrypt from "bcrypt";
 
 export default async function handler(req, res) {
@@ -15,7 +14,6 @@ export default async function handler(req, res) {
     profilePictureUrl,
     coverUrl,
   } = req.body;
-  logger(req, res, async () => {
     const { id }: { id: number } = req.user;
     if (req.method === "DELETE") {
       try {
@@ -29,8 +27,7 @@ export default async function handler(req, res) {
           res.status(400).json(responseMsg.BAD_REQUEST);
           return;
         }
-        delete result.id;
-        delete result.password;
+
         responseMsg.OK = {
           ...responseMsg.OK,
           message: "Yeay! Berhasil hapus data",
@@ -58,8 +55,7 @@ export default async function handler(req, res) {
             profile_picture_url: profilePictureUrl
           },
         });
-        delete result.id;
-        delete result.password;
+
         responseMsg.OK = {
           ...responseMsg.OK,
           message: "Yeay! Berhasil Update",
@@ -77,24 +73,31 @@ export default async function handler(req, res) {
             id: id,
           },
         });
-        if (username) bodyData.username = username;
-        if (email) bodyData.email = email;
-        if (fullName) bodyData.full_name = fullName;
-        if (phoneNumber) bodyData.phone_number = phoneNumber;
-        if (address) bodyData.address = address;
-        if (isVerified !== null || isVerified !== bodyData.is_verified)
+
+        if (bodyData === null) {
+          responseMsg.BAD_REQUEST.message = "Yahh! User tidak dapat ditemukan";
+          res.status(400).json(responseMsg.BAD_REQUEST);
+          return;
+        }
+
+        if (username && bodyData) bodyData.username = username;
+        if (email && bodyData) bodyData.email = email;
+        if (fullName && bodyData) bodyData.full_name = fullName;
+        if (phoneNumber && bodyData) bodyData.phone_number = phoneNumber;
+        if (address && bodyData) bodyData.address = address;
+        if ((isVerified !== null || isVerified !== bodyData?.is_verified) && bodyData)
           bodyData.is_verified = isVerified;
-        if (password) bodyData.password = await hashPassword(password);
-        if (profilePictureUrl) bodyData.profile_picture_url = profilePictureUrl;
-        if (coverUrl) bodyData.cover = coverUrl;
-        const result = await prisma.users.update({
-          where: {
-            id: id,
-          },
-          data: bodyData,
-        });
-        delete result.id;
-        delete result.password;
+        if (password && bodyData) bodyData.password = await hashPassword(password);
+        if (profilePictureUrl && bodyData) bodyData.profile_picture_url = profilePictureUrl;
+        if (coverUrl && bodyData) bodyData.cover = coverUrl;
+
+          const result = await prisma.users.update({
+            where: {
+              id: id,
+            },
+            data: bodyData,
+          });
+
         responseMsg.OK = {
           ...responseMsg.OK,
           message: "Yeay! Berhasil update",
@@ -117,8 +120,7 @@ export default async function handler(req, res) {
           res.status(400).json(responseMsg.BAD_REQUEST);
           return;
         }
-        delete result.id;
-        // delete result.password;
+
         responseMsg.OK = {
           ...responseMsg.OK,
           data: result,
@@ -132,7 +134,6 @@ export default async function handler(req, res) {
     } else {
       res.status(400).end(responseMsg.BAD_REQUEST);
     }
-  });
 }
 
 async function hashPassword(plainPassword) {

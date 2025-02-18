@@ -4,10 +4,7 @@ import Layout from "../../components/Layout";
 
 const PrivacyPolicy = () => {
   return (
-    <Layout
-      title="Privacy Policy | GalaxyBuilder-Oss"
-      description="Privacy Policy for GalaxyBuilder-Oss Portfolio"
-    >
+    <>
       <div className="container mt-5">
         <h1 className="mb-4">Privacy Policy</h1>
         <h2>1. Information We Collect</h2>
@@ -40,7 +37,7 @@ const PrivacyPolicy = () => {
           If you have any questions about this Privacy Policy, please contact us at support@galaxybuilder-oss.com.
         </p>
       </div>
-    </Layout>
+    </>
   );
 };
 

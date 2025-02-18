@@ -31,8 +31,6 @@ export async function POST(req: NextRequest) {
         phone_number: phoneNumber,
         address: address,
         is_active: true,
-        profile_picture_url: "",
-        cover: ""
       },
     });
 

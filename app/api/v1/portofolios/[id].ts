@@ -1,15 +1,17 @@
 import { Decimal } from "@prisma/client/runtime/library";
 import prisma from "../../../../lib/prisma";
 import { responseMsg } from "../../../../messages/response";
-import { logger } from "../../../../middleware/logger";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method === "GET") {
     try {
       const result = await prisma.portofolio.findFirst({
         where: {
-          id: parseInt(req.query.id as string)
+          id: parseInt(req.query.id as string),
         },
         include: {
           users: true,
@@ -25,8 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.error(error);
       return res.status(500).json(responseMsg.INTERNAL_ERROR);
     }
-  } else
-  logger(req, res, async () => {
+  } else {
     const { projectName, description, status, budget, startDate, endDate } =
       req.body;
     const { id } = req.query;
@@ -47,9 +48,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
         });
 
-        delete result.id;
-        delete result.user_id;
-
         responseMsg.OK = {
           ...responseMsg.OK,
           message: "Yeay! Update berhasil",
@@ -62,10 +60,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     } else if (req.method === "PATCH") {
       try {
-
         const portofolio = await prisma.portofolio.findFirst({
           where: {
-            id: parseInt(id as string)
+            id: parseInt(id as string),
           },
           include: {
             users: true,
@@ -104,9 +101,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
         });
 
-        delete result.id;
-        delete result.user_id;
-
         responseMsg.OK = {
           ...responseMsg.OK,
           message: "Yeay! Data berhasil diupdate",
@@ -124,8 +118,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             id: parseInt(id as string),
           },
         });
-        delete result.id;
-        delete result.user_id;
 
         responseMsg.OK = {
           ...responseMsg.OK,
@@ -138,5 +130,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(500).json(responseMsg.INTERNAL_ERROR);
       }
     }
-  });
+  }
 }

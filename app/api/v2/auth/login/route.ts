@@ -1,5 +1,4 @@
-import jwt from "jsonwebtoken";
-import { SignJWT, jwtVerify, type JWTPayload } from "jose";
+import { SignJWT } from "jose";
 import prisma from "../../../../../lib/prisma";
 import { responseMsg } from "../../../../../messages/response";
 import bcrypt from "bcrypt";
@@ -12,7 +11,7 @@ export async function POST(req: NextRequest) {
     const data = {
       token: "",
     };
-    const result = await prisma.users.findFirst({
+    const result = await prisma.users.findUnique({
       where: {
         username: username,
       },
@@ -26,8 +25,8 @@ export async function POST(req: NextRequest) {
       responseMsg.BAD_REQUEST.message = "Yahh! Login gagal!";
       return NextResponse.json(responseMsg.BAD_REQUEST, { status: 400 });
     }
-    data.token = await sign(
-      { id: result.id, username: result.username },
+    data.token = await signToken(
+      { id: result.id, username: result.username } as any,
       process.env.SECRET_KEY as string
     );
     responseMsg.OK = {
@@ -42,22 +41,12 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function OPTIONS() {
-  return NextResponse.json({ message: "Method Not Allowed" }, { status: 405 });
-}
-
 async function verifyPassword(plainPassword: string, hashedPassword: string) {
   const match = await bcrypt.compare(plainPassword, hashedPassword);
   return match; // Returns true if passwords match, false otherwise
 }
 
-async function hashPassword(plainPassword: string) {
-  const saltRounds = 10; // The number of rounds to use for generating the salt
-  const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
-  return hashedPassword;
-}
-
-export async function sign(payload: any, secret: string): Promise<string> {
+async function signToken(payload: any, secret: string): Promise<string> {
   const iat = Math.floor(Date.now() / 1000);
   const exp = iat + 60 * 60; // one hour
 

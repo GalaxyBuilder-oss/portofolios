@@ -1,5 +1,4 @@
-// components/ContactForm.js
-
+"use client";
 import { useState } from "react";
 import Layout from "../../components/Layout";
 
@@ -24,7 +23,7 @@ const Contact = () => {
   };
 
   return (
-    <Layout title="Hubungi Saya | GalaxyBuilder-Oss" description="Tell me about galaxybuilder">
+    <>
       <div className="contact-form container mt-5">
         <h2 className="text-center mb-4">Reach Me</h2>
         <form onSubmit={handleSubmit}>
@@ -74,7 +73,7 @@ const Contact = () => {
           </button>
         </form>
       </div>
-    </Layout>
+    </>
   );
 };
 

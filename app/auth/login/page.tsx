@@ -49,10 +49,7 @@ const router = useRouter();
     }
   }, [router]);
   return (
-    <Layout
-      title="Login | GalaxyBuilder-Oss"
-      description="Login to your account"
-    >
+    <>
       <div className="login-form container mt-5">
         <h2 className="text-center mb-4">Masuk</h2>
         <form onSubmit={handleSubmit}>
@@ -94,7 +91,7 @@ const router = useRouter();
           </p>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

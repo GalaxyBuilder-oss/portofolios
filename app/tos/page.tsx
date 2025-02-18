@@ -1,13 +1,8 @@
 // components/AboutPage.js
 
-import Layout from "../../components/Layout";
-
 const PrivacyPolicy = () => {
   return (
-    <Layout
-      title="Terms of Service | GalaxyBuilder-Oss"
-      description="Terms of Service for GalaxyBuilder-Oss Portfolio"
-    >
+    <>
       <div className="container mt-5">
         <h1 className="mb-4">Terms of Service</h1>
         <h2>1. Acceptance of Terms</h2>
@@ -40,7 +35,7 @@ const PrivacyPolicy = () => {
           For any questions about these terms, please contact us at support@galaxybuilder-oss.com.
         </p>
       </div>
-    </Layout>
+    </>
   );
 };
 

@@ -19,8 +19,6 @@ type AppContextProps = {
   fetchUser?: () => void;
   token?: string;
   router?: any;
-  portofolios?: PortofoliosProps[] |null,
-  fetchPortofolios?: () => void;
   timeAgo?: (date: Date) => string;
 };
 
@@ -30,7 +28,6 @@ const AppContext = createContext<AppContextProps>({});
 // AppProvider component
 const AppProvider: React.FC = ({ children }: { children: ReactNode }) => {
   const [profile, setProfile] = useState<UsersProps | null>();
-  const [portofolios, setPortofolios] = useState<PortofoliosProps[] | null>(null);
   const router = useRouter();
   const token = Cookies.get("token");
 
@@ -76,24 +73,6 @@ const AppProvider: React.FC = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const fetchPortofolios = async () => {
-    try {
-      const res = await axios.get(`/api/v2/portfolios`);
-      const serializedData = res.data.data.map(PortofolioResponseDto);
-      setPortofolios(serializedData);
-      sessionStorage.setItem("portofolios", JSON.stringify(serializedData)); // Cache data in sessionStorage
-    } catch (error) {
-      console.error("Failed to fetch or process portfolio data:", error);
-    }
-  };
-
-  useEffect(() => {
-    const cachedData = sessionStorage.getItem("portofolios");
-    if (cachedData && token) {
-      setPortofolios(JSON.parse(cachedData));
-    }
-  }, [token]);
-
   function timeAgo(date: Date): string {
     const now = new Date();
     const diffInMilliseconds = now.getTime() - date.getTime();
@@ -138,7 +117,7 @@ const AppProvider: React.FC = ({ children }: { children: ReactNode }) => {
 
   return (
     <AppContext.Provider
-      value={{ profile, defaultProfile, fetchUser, router, token, fetchPortofolios, portofolios, timeAgo }}
+      value={{ profile, defaultProfile, fetchUser, router, token, timeAgo }}
     >
       {children}
     </AppContext.Provider>

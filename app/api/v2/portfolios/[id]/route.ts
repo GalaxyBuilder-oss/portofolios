@@ -5,13 +5,15 @@ import prisma from "../../../../../lib/prisma";
 import { responseMsg } from "../../../../../messages/response";
 
 export async function GET(req: NextRequest, { params }) {
-  const id = await params.id;
 
   try {
+    const id = params.id;
     console.log('id', id);
+    if(id ===null)
+      return NextResponse.json(responseMsg.BAD_REQUEST, {status: 400})
     const result = await prisma.portofolio.findFirst({
       where: {
-        id: parseInt(id as string),
+        id: parseInt(id),
       },
       include: {
         users: true,
@@ -22,6 +24,7 @@ export async function GET(req: NextRequest, { params }) {
       message: "Yeay! Berhasil mendapatkan data",
       data: result,
     };
+
     return NextResponse.json(responseMsg.OK, { status: 200 });
   } catch (error) {
     console.error(error);
@@ -30,10 +33,10 @@ export async function GET(req: NextRequest, { params }) {
 }
 
 export async function PUT(req: NextRequest, { params }) {
-  const id = await params.id;
-  const { projectName, description, status, budget, startDate, endDate } = await req.json();
 
   try {
+    const id = await params.id;
+    const { projectName, description, status, budget, startDate, endDate } = await req.json();
     const portofolio = await prisma.portofolio.findFirst({
       where: {
         id: parseInt(id as string),
@@ -86,9 +89,9 @@ export async function PUT(req: NextRequest, { params }) {
 }
 
 export async function DELETE(req: NextRequest, { params }) {
-  const id = await params.id;
 
   try {
+    const id = params.id;
     const result = await prisma.portofolio.delete({
       where: {
         id: parseInt(id as string),

@@ -46,8 +46,6 @@ export default async function handler(req, res) {
           cover: "https://images.unsplash.com/photo-1658579222223-ca243ef7c520?q=80&w=1470&auto=format&fit=crop"
         },
       });
-      delete result.id;
-      delete result.password;
       responseMsg.OK = {
         ...responseMsg.OK,
         message: "Yeay! Berhasil mendaftar",

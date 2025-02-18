@@ -1,0 +1,126 @@
+{
+  "title": "My Project List",
+  "data": [
+    {
+      "id": 0,
+      "projectName": "Danapo | Pelatihan Logika Dasar Dan Bahasa C",
+      "description": "Aplikasi Pinjaman berbasis bahasa c",
+      "startDate": "2023-01-07T00:00:00Z",
+      "endDate": "2023-01-17T23:59:59Z",
+      "status": "Done",
+      "budget": 0,
+      "coverUrl": "",
+      "githubLink": "https://github.com/GalaxyBuilder-oss/Danapo"
+    },
+    {
+      "id": 1,
+      "projectName": "Tokopaedi | Pelatihan WEB",
+      "description": "Website penjualan berbasis html, js dan css, menggunakan Rest API publik dari fakestoreapi.com",
+      "startDate": "2023-08-20T00:00:00Z",
+      "endDate": "2023-08-30T23:59:59Z",
+      "status": "Done",
+      "budget": 0,
+      "coverUrl": "",
+      "githubLink": "https://github.com/GalaxyBuilder-oss/Tokopaedi-Web-Project"
+    },
+    {
+      "id": 2,
+      "projectName": "Sistem PUB | Pelatihan Java Fundamental",
+      "description": "API Sistem PUB menggunakan mysql sebagai databasenya dan java springoot dan thymeleaf",
+      "startDate": "2023-11-29T00:00:00Z",
+      "endDate": "2023-11-08T23:59:59Z",
+      "status": "Done",
+      "budget": 0,
+      "coverUrl": "",
+      "githubLink": "https://github.com/GalaxyBuilder-oss/java-fundamental-project"
+    },
+    {
+      "id": 3,
+      "projectName": "Rasa Hotel Backend | Pelatihan Java Lanjutan",
+      "description": "Sebuah Rest API hotel dengan fitur booking dan payment gateway, pertama dengan FULLSTACK kelompok, backend: Java Spring Boot dan Frontend: React",
+      "startDate": "2024-05-25T00:00:00Z",
+      "endDate": "2024-06-13T23:59:59Z",
+      "status": "Done",
+      "budget": 0,
+      "coverUrl": "",
+      "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-backend"
+    },
+    {
+      "id": 4,
+      "projectName": "Rasa Hotel Backend | Pelatihan Java Lanjutan",
+      "description": "Sebuah Rest API hotel dengan fitur booking dan payment gateway, pertama dengan FULLSTACK kelompok, backend: Java Spring Boot dan Frontend: React",
+      "startDate": "2023-11-29T00:00:00Z",
+      "endDate": "2023-11-08T23:59:59Z",
+      "status": "Done",
+      "budget": 0,
+      "coverUrl": "",
+      "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-frontend"
+    },
+    {
+      "id": 5,
+      "projectName": "Money Meter | Pelatihan ReactJS Dasar",
+      "description": "Sebuah aplikasi pencatatan uang masuk dan keluar",
+      "startDate": "2024-08-26T00:00:00Z",
+      "endDate": "2024-09-04T23:59:59Z",
+      "status": "Done",
+      "budget": 0,
+      "coverUrl": "",
+      "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-frontend"
+    },
+    {
+      "id": 6,
+      "projectName": "Absensi Sholat PUB | GalaxyBuilder-OSS",
+      "description": "Sebuah aplikasi pencatatan hadir tidak nya sholat berjamaah",
+      "startDate": "",
+      "endDate": "",
+      "status": "Ongoing",
+      "budget": 0,
+      "coverUrl": "",
+      "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-frontend"
+    },
+    {
+      "id": 7,
+      "projectName": "General Ledger | GalaxyBuilder-OSS",
+      "description": "Sebuah aplikasi buku agenda",
+      "startDate": "",
+      "endDate": "",
+      "status": "Done",
+      "budget": 0,
+      "coverUrl": "",
+      "githubLink": "https://github.com/GalaxyBuilder-oss/General-Ledger"
+    },
+    {
+      "id": 8,
+      "projectName": "CalcIP | GalaxyBuilder-OSS",
+      "description": "Web penghitung ipk",
+      "startDate": "",
+      "endDate": "",
+      "status": "Ongoing",
+      "budget": 0,
+      "coverUrl": "",
+      "githubLink": ""
+    },
+    {
+      "id": 9,
+      "projectName": "IP Subnetting | GalaxyBuilder-OSS",
+      "description": "Aplikasi ip subnetting",
+      "startDate": "",
+      "endDate": "",
+      "status": "Ongoing",
+      "budget": 0,
+      "coverUrl": "",
+      "githubLink": "https://github.com/GalaxyBuilder-oss/ip-subnetting"
+    },
+    {
+      "id": 10,
+      "projectName": "Tower Defense | GalaxyBuilder-OSS",
+      "description": "Game Tower Defense Dengan Java Swing",
+      "startDate": "",
+      "endDate": "",
+      "status": "Ongoing",
+      "budget": 0,
+      "coverUrl": "",
+      "githubLink": "https://github.com/GalaxyBuilder-oss/towerdefense"
+    }
+  ]
+}

@@ -1,18 +1,17 @@
 "use client"
 import axios from "axios";
 import moment from "moment";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Datetime from "react-datetime";
 import { useAppContext } from "../../components/AppContext";
-import Layout from "../../components/Layout";
 import Portofolio from "../../components/Portofolio";
-import { PortfolioReqDto, PortofoliosProps, SortOption } from "../../types";
+import { LocalPortofoliosProps, PortfolioReqDto, PortofoliosProps, SortOption } from "../../types";
 import { PortofolioResponseDto } from "../../utils/Dto";
 
-const Portfolio: React.FC = () => {
+const Portfolio = () => {
   const { router, token } = useAppContext();
-  const [sortedFeed, setSortedFeed] = useState<PortofoliosProps[] | null>(null);
-  const [portofolios, setPortofolios] = useState<PortofoliosProps[] | null>(null);
+  const [sortedFeed, setSortedFeed] = useState<LocalPortofoliosProps[] | null>(null);
+  const [portofolios, setPortofolios] = useState<LocalPortofoliosProps[] | null>(null);
   const [sortOption, setSortOption] = useState<SortOption>("projectName");
   const [newPortofolio, setNewPortofolio] =
     useState<PortfolioReqDto | null>(null);
@@ -27,10 +26,11 @@ const Portfolio: React.FC = () => {
 
   const fetchPortofolios = async () => {
       try {
-        const res = await axios.get(`/api/v2/portfolios`);
-        const serializedData = res.data.data.map(PortofolioResponseDto);
-        setPortofolios(serializedData);
-        sessionStorage.setItem("portofolios", JSON.stringify(serializedData)); // Cache data in sessionStorage
+        const res = await axios.get(`/project-list.json`);
+        // console.log(res.data)
+        // const serializedData = res.data.data.map(PortofolioResponseDto);
+        setPortofolios(res.data.data);
+        // sessionStorage.setItem("portofolioss", JSON.stringify(serializedData)); // Cache data in sessionStorage
       } catch (error) {
         console.error("Failed to fetch or process portfolio data:", error);
       }
@@ -40,47 +40,47 @@ const Portfolio: React.FC = () => {
     fetchPortofolios();
   }, []);
 
-  useEffect(() => {
-    portofolios && sortPortfolios();
-  }, [sortOption, portofolios]);
+  // useEffect(() => {
+  //   portofolios && sortPortfolios();
+  // }, [sortOption, portofolios]);
 
-  const sortPortfolios = () => {
-    let sorted = [...portofolios ?? []];
+  // const sortPortfolios = () => {
+  //   let sorted = [...portofolios ?? []];
 
-    switch (sortOption) {
-      case "projectName":
-        sorted.sort((a, b) => a.projectName.localeCompare(b.projectName));
-        break;
-      case "createdAt":
-        sorted.sort(
-          (a, b) =>
-            new Date(b.createdAt as string).getTime() - new Date(a.createdAt as string).getTime()
-        );
-        break;
-      case "updateAt":
-        sorted.sort(
-          (a, b) =>
-            new Date(b.updatedAt as string).getTime() - new Date(a.updatedAt as string).getTime()
-        );
-        break;
-      case "startDate":
-        sorted.sort(
-          (a, b) =>
-            new Date(a.startDate as string).getTime() - new Date(b.startDate as string).getTime()
-        );
-        break;
-      case "endDate":
-        sorted.sort(
-          (a, b) =>
-            new Date(a.endDate as string).getTime() - new Date(b.endDate as string).getTime()
-        );
-        break;
-      default:
-        break;
-    }
+  //   switch (sortOption) {
+  //     case "projectName":
+  //       sorted.sort((a, b) => a.projectName.localeCompare(b.projectName));
+  //       break;
+  //     case "createdAt":
+  //       sorted.sort(
+  //         (a, b) =>
+  //           new Date(b.createdAt as string).getTime() - new Date(a.createdAt as string).getTime()
+  //       );
+  //       break;
+  //     case "updateAt":
+  //       sorted.sort(
+  //         (a, b) =>
+  //           new Date(b.updatedAt as string).getTime() - new Date(a.updatedAt as string).getTime()
+  //       );
+  //       break;
+  //     case "startDate":
+  //       sorted.sort(
+  //         (a, b) =>
+  //           new Date(a.startDate as string).getTime() - new Date(b.startDate as string).getTime()
+  //       );
+  //       break;
+  //     case "endDate":
+  //       sorted.sort(
+  //         (a, b) =>
+  //           new Date(a.endDate as string).getTime() - new Date(b.endDate as string).getTime()
+  //       );
+  //       break;
+  //     default:
+  //       break;
+  //   }
 
-    setSortedFeed(sorted);
-  };
+  //   setSortedFeed(sorted);
+  // };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -134,11 +134,11 @@ const Portfolio: React.FC = () => {
   };
 
   return (
-    <Layout title="Portofolio Saya | GalaxyBuilder-Oss">
+    <>
       <div className="page">
         <h1>My Portofolio</h1>
         <div className="d-flex justify-content-between">
-          <div className="d-flex align-items-center">
+          {/* <div className="d-flex align-items-center">
             <label htmlFor="sortOptions">Urutkan : </label>
             <select
               id="sortOptions"
@@ -152,7 +152,7 @@ const Portfolio: React.FC = () => {
               <option value="startDate">Tanggal Mulai</option>
               <option value="endDate">Tanggal Selesai</option>
             </select>
-          </div>
+          </div> */}
           {/* <div
               className="btn-group"
               role="group"
@@ -185,8 +185,8 @@ const Portfolio: React.FC = () => {
           )}
         </div>
         <main>
-          {sortedFeed &&
-            sortedFeed.map((portofolio) => (
+          {portofolios &&
+            portofolios.map((portofolio) => (
               <div key={portofolio.id} className="portofolio">
                 <Portofolio portofolio={portofolio} />
               </div>
@@ -327,7 +327,7 @@ const Portfolio: React.FC = () => {
           </div>
         </div>
       )}
-    </Layout>
+    </>
   );
 };
 
