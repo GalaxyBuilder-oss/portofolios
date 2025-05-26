@@ -40,9 +40,9 @@ const Header: React.FC = () => {
       className="px-2 text-light normal"
     >
       <Navbar.Brand href="/">
-        <span className="bold">GalaxyBuilder-Oss</span>
+        <span className="fw-bold font-monospace">@GalaxyBuilder-Oss</span>
       </Navbar.Brand>
-      <Navbar.Toggle onClick={() => setExpanded(expanded ? false : true)} />
+      <Navbar.Toggle onClick={() => setExpanded(!expanded)} />
       <Navbar.Collapse
         id="nav-collapse"
         className="justify-content-between align-items-center"
@@ -81,7 +81,7 @@ const Header: React.FC = () => {
             Contact
           </Nav.Link>
         </Nav>
-        <div className="d-flex gap-2">
+        <div className="d-none gap-2">
           <Form className="d-flex gap-2">
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
             <Button variant="outline-light" type="submit">

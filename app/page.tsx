@@ -1,9 +1,10 @@
 "use client";
 import { Button, Card } from "react-bootstrap";
+import Layout from "../components/Layout";
 
 const page = () => {
   return (
-    <>
+    <Layout>
       {/* Hero Section */}
       <section className="hero bg-light text-center py-5">
         <h1 className="display-4">Selamat Datang di Portofolio Saya!</h1>
@@ -71,7 +72,7 @@ const page = () => {
           Hubungi Saya
         </Button>
       </section>
-    </>
+    </Layout>
   );
 };
 

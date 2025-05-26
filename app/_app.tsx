@@ -6,7 +6,8 @@ import "react-datetime/css/react-datetime.css";
 import AppProvider from "../components/AppContext";
 
 const App = ({ Component, pageProps }: AppProps) => {
-  return (
+  document.title = "GalaxyBuilder-Oss | My Portofolio"
+    return (
     <>
       <AppProvider>
         <Component {...pageProps} />

@@ -51,8 +51,9 @@ const Portofolio: React.FC<{ portofolio: LocalPortofoliosProps }> = ({
     >
       <Card.Img
         variant="top"
-        src={"https://portofolio2024.s3.amazonaws.com/default_project_thumbnail.png"}
+        src={"https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png"}
         alt={portofolio.projectName}
+        className={`px-4 py-2`}
         style={{ height: 125 + "px", objectFit: "contain" }}
       />
       <Card.Body>

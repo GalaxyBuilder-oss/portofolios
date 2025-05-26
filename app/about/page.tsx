@@ -9,7 +9,7 @@ const AboutPage = () => {
       description="This is about galaxybuilder"
     >
       <div className="about-page container mt-5">
-        <h2 className="text-center mb-4">Tentang Saya</h2>
+        <h2 className="text-center mb-4 fw-bold text-uppercase">Tentang Saya</h2>
         <p>
           <strong>GalaxyBuilder-Oss</strong> adalah platform yang dirancang
           untuk menyediakan solusi perangkat lunak berkualitas tinggi bagi
@@ -22,7 +22,7 @@ const AboutPage = () => {
           dan teknologi terkini, kami berkomitmen untuk menghadirkan solusi yang
           memberikan dampak nyata.
         </p>
-        <h3>Nilai Inti</h3>
+        <h2 className={`text-center mb-4 fw-bold text-uppercase`}>Nilai Inti</h2>
         <ul>
           <li>Inovasi: Terus berkembang dengan teknologi terbaru.</li>
           <li>
@@ -34,7 +34,7 @@ const AboutPage = () => {
             kami.
           </li>
         </ul>
-        <h3>Tim</h3>
+        <h2 className={`text-center mb-4 fw-bold text-uppercase`}>Tim</h2>
         <p>
           Saya seorang yang belajar menjadi profesional berbakat dan memiliki
           gairah dalam teknologi dan berkomitmen untuk memberikan hasil yang

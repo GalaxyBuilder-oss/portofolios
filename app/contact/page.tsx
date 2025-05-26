@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Layout from "../../components/Layout";
+import {Card, Col, Container, Row} from "react-bootstrap";
 
 const Contact = () => {
   const [form, setForm] = useState({
@@ -23,57 +24,96 @@ const Contact = () => {
   };
 
   return (
-    <>
-      <div className="contact-form container mt-5">
+      <Container className="my-5">
         <h2 className="text-center mb-4">Reach Me</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              className="form-control"
-              placeholder="Enter your name"
-              value={form.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
 
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="form-control"
-              placeholder="Enter your email"
-              value={form.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
+        {/* Contact form disabled, can be enabled later */}
+        {/*
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="formName">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter your name"
+            value={form.name}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
 
-          <div className="form-group">
-            <label htmlFor="message">Message</label>
-            <textarea
-              id="message"
-              name="message"
-              className="form-control"
-              placeholder="Enter your message"
-              value={form.message}
-              onChange={handleChange}
-              required
-            />
-          </div>
+        <Form.Group className="mb-3" controlId="formEmail">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter your email"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
 
-          <button type="submit" className="btn btn-dark w-100 mt-4">
-            Send Message
-          </button>
-        </form>
-      </div>
-    </>
+        <Form.Group className="mb-3" controlId="formMessage">
+          <Form.Label>Message</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            placeholder="Enter your message"
+            value={form.message}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+
+        <Button variant="dark" type="submit" className="w-100">
+          Send Message
+        </Button>
+      </Form>
+      */}
+
+        <Card className="mt-5 shadow-sm border-0">
+          <Card.Body>
+            <Card.Title className="text-center mb-4">Or Connect via Social Media</Card.Title>
+            <Row className="text-center g-4">
+              <Col md={4}>
+                <i className="bi bi-linkedin fs-2 text-primary"></i>
+                <p className="mt-2">
+                  <a
+                      href="https://www.linkedin.com/in/salim-hidayat-049b35293"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                  >
+                    Salim Hidayat
+                  </a>
+                </p>
+              </Col>
+              <Col md={4}>
+                <i className="bi bi-github fs-2 text-dark"></i>
+                <p className="mt-2">
+                  <a
+                      href="https://github.com/GalaxyBuilder-Oss"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                  >
+                    GalaxyBuilder-Oss
+                  </a>
+                </p>
+              </Col>
+              <Col md={4}>
+                <i className="bi bi-instagram fs-2 text-danger"></i>
+                <p className="mt-2">
+                  <a
+                      href="https://instagram.com/salim_fund.dev"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                  >
+                    @salim_fund.dev
+                  </a>
+                </p>
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
+      </Container>
   );
 };
 

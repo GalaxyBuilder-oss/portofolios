@@ -135,7 +135,7 @@ const Portfolio = () => {
 
   return (
     <>
-      <div className="page">
+      <div className="page mx-3">
         <h1>My Portofolio</h1>
         <div className="d-flex justify-content-between">
           {/* <div className="d-flex align-items-center">
