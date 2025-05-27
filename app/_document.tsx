@@ -5,7 +5,10 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link rel="stylesheet" href="/styles/globals.css" />
+            <meta name="description" content="Deskripsi singkat website kamu" />
+            <meta name="robots" content="index, follow" />
+            <link rel="canonical" href="https://galaxybuilder.vercel.app/" />
+            <link rel="stylesheet" href="/styles/global.css" />
         </Head>
         <body>
           <Main />
