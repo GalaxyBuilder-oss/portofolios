@@ -58,7 +58,7 @@ const Portofolio: React.FC<{ portofolio: LocalPortofoliosProps }> = ({
       />
       <Card.Body>
         <Card.Title>{portofolio.projectName}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">
+        <Card.Subtitle className="mb-2 text-muted fw-light fs-6">
           By @{authorName}
         </Card.Subtitle>
         {/* <Card.Subtitle className="mb-2 text-muted">

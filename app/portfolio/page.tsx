@@ -135,8 +135,9 @@ const Portfolio = () => {
 
   return (
     <>
-      <div className="page mx-3">
+      <div className="page m-3">
         <h1>My Portofolio</h1>
+        <p className={"text-end"}>{portofolios?.length || "0"} Projek</p>
         <div className="d-flex justify-content-between">
           {/* <div className="d-flex align-items-center">
             <label htmlFor="sortOptions">Urutkan : </label>

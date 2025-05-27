@@ -1,14 +1,14 @@
 {
   "name": "portofolios-galaxybuilder",
   "version": "1.0.0",
-  "description": "",
+  "description": "Siapkan langkah menuju masa depan yang lebih cerah",
   "scripts": {
     "dev": "next --turbopack",
     "build": "prisma generate && next build",
     "start": "next start"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["portofolios","opentowork","freelance","remote"],
+  "author": "GalaxyBuilder-Oss",
   "license": "MIT",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.749.0",

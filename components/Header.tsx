@@ -16,9 +16,9 @@ const Header: React.FC = () => {
   const router = useRouter();
   const token = Cookies.get("token");
   const [expanded, setExpanded] = useState(false);
-  const urlpath = usePathname();
+  const urlPath = usePathname();
   const isActive: (pathname: string) => boolean = (pathname) =>
-    urlpath === pathname;
+    urlPath === pathname;
 
   const handleLogout = () => {
     // Menghapus token dari cookies
@@ -40,19 +40,19 @@ const Header: React.FC = () => {
       className="px-2 text-light normal"
     >
       <Navbar.Brand href="/">
-        <span className="fw-bold font-monospace">@GalaxyBuilder-Oss</span>
+        <span className="fw-bold font-monospace px-4 px-sm-2">@GalaxyBuilder-Oss</span>
       </Navbar.Brand>
       <Navbar.Toggle onClick={() => setExpanded(!expanded)} />
       <Navbar.Collapse
         id="nav-collapse"
         className="justify-content-between align-items-center"
       >
-        <Nav className="mr-auto">
+        <Nav className="mr-auto px-4 px-sm-2">
           <Nav.Link
             href="/"
             onClick={() => setExpanded(false)}
             active={isActive("/")}
-            className="text-light text-decoration-none"
+            className={`text-light text-decoration-none ${isActive("/") && "border-bottom border-white border-2 rounded"}`}
           >
             Home
           </Nav.Link>
@@ -60,7 +60,7 @@ const Header: React.FC = () => {
             href="/portfolio"
             onClick={() => setExpanded(false)}
             active={isActive("/portfolio")}
-            className="text-light text-decoration-none"
+            className={`text-light text-decoration-none ${isActive("/portfolio") && "border-bottom border-white border-2 rounded"}`}
           >
             Portfolio
           </Nav.Link>
@@ -68,15 +68,23 @@ const Header: React.FC = () => {
             href="/about"
             onClick={() => setExpanded(false)}
             active={isActive("/about")}
-            className="text-light text-decoration-none"
+            className={`text-light text-decoration-none ${isActive("/about") && "border-bottom border-white border-2 rounded"}`}
           >
             About
+          </Nav.Link>
+          <Nav.Link
+            href="/cv"
+            onClick={() => setExpanded(false)}
+            active={isActive("/cv")}
+            className={`text-light text-decoration-none ${isActive("/cv") && "border-bottom border-white border-2 rounded"}`}
+          >
+            CV / Resume
           </Nav.Link>
           <Nav.Link
             href="/contact"
             onClick={() => setExpanded(false)}
             active={isActive("/contact")}
-            className="text-light text-decoration-none"
+            className={`text-light text-decoration-none ${isActive("/contact") && "border-bottom border-white border-2 rounded"}`}
           >
             Contact
           </Nav.Link>

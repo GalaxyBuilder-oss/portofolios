@@ -20,7 +20,7 @@ const page = () => {
       <section className="features py-5">
         <div className="container">
           <h2 className="text-center mb-4">Fitur Unggulan</h2>
-          <div className="row">
+          <div className="row gap-4 gap-xl-0">
             <div className="col-md-4">
               <Card className="text-center pt-2">
                 <Card.Title>Desain Responsif</Card.Title>
@@ -65,7 +65,7 @@ const page = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="cta bg-dark text-light text-center py-5">
+      <section className="cta bg-dark text-light text-center py-5 rounded-2">
         <h2 className="text-light">Siap Membangun Proyek Anda?</h2>
         <p>Hubungi saya sekarang untuk memulai proyek Anda bersama saya.</p>
         <Button variant="light" size="lg" href="/contact">

@@ -130,3 +130,17 @@ h2 {
   font-size: 24px;
   cursor: pointer;
 }
+
+/* Text */
+.text-indent-1 {
+  text-indent: 1rem;
+}
+.text-indent-2 {
+  text-indent: 2rem;
+}
+.text-indent-md-3 {
+  text-indent: 3rem;
+}
+.text-justify {
+  text-align: justify;
+}

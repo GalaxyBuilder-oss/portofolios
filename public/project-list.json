@@ -47,7 +47,7 @@
     },
     {
       "id": 4,
-      "projectName": "Rasa Hotel Backend | Pelatihan Java Lanjutan",
+      "projectName": "Rasa Hotel Frontend | Pelatihan Java Lanjutan",
       "description": "Sebuah Rest API hotel dengan fitur booking dan payment gateway, pertama dengan FULLSTACK kelompok, backend: Java Spring Boot dan Frontend: React",
       "startDate": "2023-11-29T00:00:00Z",
       "endDate": "2023-11-08T23:59:59Z",
