@@ -38,18 +38,29 @@ export async function middleware(req: NextRequest) {
       GET: [
         "/api/v2",
         "/api/v1",
+        "/api/json",
         "/api",
       ],
-      POST: ["/api/v2/auth/login"],
+      POST: ["/api/v2/auth/login","/api/json"],
+      PUT: ["/api/json"],
+      DELETE: ["/api/json"],
     };
     const requestPath =new URL(req.url).pathname;
 
     if (req.method === "GET" &&
-    (allowedPaths.GET.includes(requestPath) || requestPath.startsWith("/api/v2/portfolios"))) {
+    (allowedPaths.GET.includes(requestPath) || requestPath.startsWith("/api/v2/portfolios") || requestPath.startsWith("/api/json"))) {
       console.log(req.url);
       return res;
     }
     if (req.method === "POST" && allowedPaths.POST.includes(requestPath)) {
+      console.log(req.url);
+      return res;
+    }
+    if (req.method === "PUT" && requestPath.startsWith(allowedPaths.PUT[0])) {
+      console.log(req.url);
+      return res;
+    }
+    if (req.method === "DELETE" && requestPath.startsWith(allowedPaths.DELETE[0])) {
       console.log(req.url);
       return res;
     }
