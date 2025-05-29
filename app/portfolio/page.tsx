@@ -29,7 +29,7 @@ const Portfolio = () => {
         const res = await axios.get(`/project-list.json`);
         // console.log(res.data)
         // const serializedData = res.data.data.map(PortofolioResponseDto);
-        setPortofolios(res.data);
+        setPortofolios(res.data.data);
         // sessionStorage.setItem("portofolioss", JSON.stringify(serializedData)); // Cache data in sessionStorage
       } catch (error) {
         console.error("Failed to fetch or process portfolio data:", error);
