@@ -10,7 +10,8 @@
       "status": "Done",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
-      "githubLink": "https://github.com/GalaxyBuilder-oss/Danapo"
+      "githubLink": "https://github.com/GalaxyBuilder-oss/Danapo",
+      "tags": ["C"]
     },
     {
       "id": 1,
@@ -21,7 +22,8 @@
       "status": "Done",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
-      "githubLink": "https://github.com/GalaxyBuilder-oss/Tokopaedi-Web-Project"
+      "githubLink": "https://github.com/GalaxyBuilder-oss/Tokopaedi-Web-Project",
+      "tags": ["HTML", "CSS", "JavaScript", "REST API"]
     },
     {
       "id": 2,
@@ -32,7 +34,8 @@
       "status": "Done",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
-      "githubLink": "https://github.com/GalaxyBuilder-oss/java-fundamental-project"
+      "githubLink": "https://github.com/GalaxyBuilder-oss/java-fundamental-project",
+      "tags": ["Java", "Spring Boot", "Thymeleaf", "MySQL"]
     },
     {
       "id": 3,
@@ -43,7 +46,8 @@
       "status": "Done",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
-      "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-backend"
+      "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-backend",
+      "tags": ["Java", "Spring Boot", "REST API"]
     },
     {
       "id": 4,
@@ -54,7 +58,8 @@
       "status": "Done",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
-      "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-frontend"
+      "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-frontend",
+      "tags": ["React", "JavaScript"]
     },
     {
       "id": 5,
@@ -65,7 +70,8 @@
       "status": "Done",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
-      "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-frontend"
+      "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-frontend",
+      "tags": ["ReactJS", "Java", "Spring Boot", "JavaScript"]
     },
     {
       "id": 6,
@@ -76,7 +82,8 @@
       "status": "Ongoing",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
-      "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-frontend"
+      "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-frontend",
+      "tags": ["Javascript", "ReactJS", "Firebase", "Firestore", "Web App"]
     },
     {
       "id": 7,
@@ -87,7 +94,8 @@
       "status": "Done",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
-      "githubLink": "https://github.com/GalaxyBuilder-oss/General-Ledger"
+      "githubLink": "https://github.com/GalaxyBuilder-oss/General-Ledger",
+      "tags": ["Visual Basic", "Web App"]
     },
     {
       "id": 8,
@@ -98,7 +106,8 @@
       "status": "Ongoing",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
-      "githubLink": ""
+      "githubLink": "",
+      "tags": ["JavaScript", "Web App"]
     },
     {
       "id": 9,
@@ -109,7 +118,8 @@
       "status": "Ongoing",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
-      "githubLink": "https://github.com/GalaxyBuilder-oss/ip-subnetting"
+      "githubLink": "https://github.com/GalaxyBuilder-oss/ip-subnetting",
+      "tags": ["Python", "Networking"]
     },
     {
       "id": 10,
@@ -120,7 +130,8 @@
       "status": "Ongoing",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
-      "githubLink": "https://github.com/GalaxyBuilder-oss/towerdefense"
+      "githubLink": "https://github.com/GalaxyBuilder-oss/towerdefense",
+      "tags": ["Java", "Swing", "Game"]
     }
   ]
 }

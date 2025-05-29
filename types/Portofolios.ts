@@ -10,6 +10,7 @@ export type LocalPortofoliosProps = {
   budget?: number | null;
   coverUrl?: string | null;
   githubLink: string;
+  tags?: string[];
 };
 
 export type PortofoliosProps = {
