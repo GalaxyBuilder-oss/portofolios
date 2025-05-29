@@ -11,7 +11,7 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
       "githubLink": "https://github.com/GalaxyBuilder-oss/Danapo",
-      "tags": ["C"]
+      "tags": ["C","Desktop"]
     },
     {
       "id": 1,
@@ -23,7 +23,7 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
       "githubLink": "https://github.com/GalaxyBuilder-oss/Tokopaedi-Web-Project",
-      "tags": ["HTML", "CSS", "JavaScript", "REST API"]
+      "tags": ["HTML", "CSS", "JavaScript", "REST API","Web"]
     },
     {
       "id": 2,
@@ -35,7 +35,7 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
       "githubLink": "https://github.com/GalaxyBuilder-oss/java-fundamental-project",
-      "tags": ["Java", "Spring Boot", "Thymeleaf", "MySQL"]
+      "tags": ["Java", "Spring Boot", "Thymeleaf", "MySQL","Web"]
     },
     {
       "id": 3,
@@ -47,7 +47,7 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
       "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-backend",
-      "tags": ["Java", "Spring Boot", "REST API"]
+      "tags": ["Java", "Spring Boot", "REST API","Web"]
     },
     {
       "id": 4,
@@ -59,7 +59,7 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
       "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-frontend",
-      "tags": ["React", "JavaScript"]
+      "tags": ["ReactJS", "JavaScript","Web"]
     },
     {
       "id": 5,
@@ -71,7 +71,7 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
       "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-frontend",
-      "tags": ["ReactJS", "Java", "Spring Boot", "JavaScript"]
+      "tags": ["ReactJS", "Java", "Spring Boot", "JavaScript", "Tailwind","Web"]
     },
     {
       "id": 6,
@@ -83,7 +83,7 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
       "githubLink": "https://github.com/GalaxyBuilder-oss/rasahotel-frontend",
-      "tags": ["Javascript", "ReactJS", "Firebase", "Firestore", "Web App"]
+      "tags": ["Javascript", "ReactJS", "Firebase", "Firestore", "Web"]
     },
     {
       "id": 7,
@@ -95,7 +95,7 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
       "githubLink": "https://github.com/GalaxyBuilder-oss/General-Ledger",
-      "tags": ["Visual Basic", "Web App"]
+      "tags": ["Visual Basic", "Desktop"]
     },
     {
       "id": 8,
@@ -106,8 +106,8 @@
       "status": "Ongoing",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
-      "githubLink": "",
-      "tags": ["JavaScript", "Web App"]
+      "githubLink": "https://github.com/GalaxyBuilder-oss/calc-ip",
+      "tags": ["JavaScript", "Web"]
     },
     {
       "id": 9,
@@ -119,7 +119,7 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
       "githubLink": "https://github.com/GalaxyBuilder-oss/ip-subnetting",
-      "tags": ["Python", "Networking"]
+      "tags": ["Python", "Networking","Desktop"]
     },
     {
       "id": 10,
@@ -131,7 +131,7 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
       "githubLink": "https://github.com/GalaxyBuilder-oss/towerdefense",
-      "tags": ["Java", "Swing", "Game"]
+      "tags": ["Java", "Swing","Desktop"]
     }
   ]
 }
