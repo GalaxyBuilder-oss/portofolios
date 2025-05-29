@@ -39,6 +39,19 @@ const Portofolio: React.FC<{ portofolio: LocalPortofoliosProps }> = ({
     //   ? `Berakhir tanggal ${formatDate(new Date(portofolio.endDate as string))}`
     //   : timeAgo && timeAgo(new Date(portofolio.endDate  as string));
 
+    const stringToColor = (str: string): string => {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        let color = "#";
+        for (let i = 0; i < 3; i++) {
+            const value = (hash >> (i * 8)) & 0xff;
+            color += ("00" + value.toString(16)).slice(-2);
+        }
+        return color;
+    };
+
     return (
         <Card
             className="portfolio-card"
@@ -62,9 +75,18 @@ const Portofolio: React.FC<{ portofolio: LocalPortofoliosProps }> = ({
                     By @{authorName}
                 </Card.Subtitle>
                 {portofolio.tags && portofolio.tags.length > 0 && (
-                    <Card.Text className="mb-2">
-                        {portofolio.tags.map((tag, idx) => (
-                            <span key={idx} className="badge bg-primary me-1">{tag}</span>
+                    <Card.Text className="mb-2 d-flex flex-wrap gap-1">
+                        {portofolio.tags?.map((tag, idx) => (
+                            <span
+                                key={idx}
+                                className="badge text-white"
+                                style={{
+                                    backgroundColor: stringToColor(tag),
+                                    padding: "0.5em 0.75em",
+                                    borderRadius: "12px",
+                                    fontSize: "0.75rem",
+                                }}
+                            >{tag}</span>
                         ))}
                     </Card.Text>
                 )}
