@@ -26,7 +26,7 @@ const Portfolio = () => {
 
   const fetchPortofolios = async () => {
       try {
-        const res = await axios.get(`/api/json`);
+        const res = await axios.get(`/project-list.json`);
         // console.log(res.data)
         // const serializedData = res.data.data.map(PortofolioResponseDto);
         setPortofolios(res.data);
