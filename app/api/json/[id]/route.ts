@@ -4,7 +4,7 @@ import {NextResponse, NextRequest} from 'next/server';
 const BASE_URL = process.env.MOCKUP_API_URL as string;
 
 export async function GET(
-    _req: NextRequest,
+    request: NextRequest,
     context: { params: { id: string } }
 ) {
     try {
