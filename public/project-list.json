@@ -132,6 +132,18 @@
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
       "githubLink": "https://github.com/GalaxyBuilder-oss/towerdefense",
       "tags": ["Java", "Swing","Desktop"]
+    },
+    {
+      "id": 11,
+      "projectName": "Chatsub | GalaxyBuilder-OSS",
+      "description": "Aplikasi Messaging Berbasis .NET Core dan menggunakan Package SignalIR sebagai akses komunikasi Secara Realtime",
+      "startDate": "2025-07-19T07:00:00Z",
+      "endDate": "",
+      "status": "Ongoing",
+      "budget": 0,
+      "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png",
+      "githubLink": "https://github.com/GalaxyBuilder-oss/",
+      "tags": ["C#", ".NET CORE", "REST API"]
     }
   ]
 }
