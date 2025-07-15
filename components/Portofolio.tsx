@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Card} from "react-bootstrap"; // Assuming you're using Bootstrap for styling
+import {Button, ButtonGroup, Card} from "react-bootstrap"; // Assuming you're using Bootstrap for styling
 import ReactMarkdown from "react-markdown";
 import {LocalPortofoliosProps} from "../types";
 import {useAppContext} from "./AppContext";
@@ -19,25 +19,9 @@ const Portofolio: React.FC<{ portofolio: LocalPortofoliosProps }> = ({
         setIsHovered(false);
     };
 
-    // const formatDate = (date: Date) => {
-    //   const options: Intl.DateTimeFormatOptions = {
-    //     year: "numeric",
-    //     month: "short",
-    //     day: "2-digit",
-    //     hour: "2-digit",
-    //     minute: "2-digit",
-    //     hour12: true,
-    //   };
-
-    //   const formattedDate = date.toLocaleString("en-US", options);
-    //   const [month, day, year, time, daytime] = formattedDate.split(" ");
-
-    //   return `${day} ${month} ${year.replace(",","")} ${time} ${daytime}`;
-    // };
-
-    // const endDateDisplay = isHovered
-    //   ? `Berakhir tanggal ${formatDate(new Date(portofolio.endDate as string))}`
-    //   : timeAgo && timeAgo(new Date(portofolio.endDate  as string));
+    const toDate = (date:string) => {
+        return new Date(date);
+    }
 
     const stringToColor = (str: string): string => {
         let hash = 0;
@@ -57,17 +41,17 @@ const Portofolio: React.FC<{ portofolio: LocalPortofoliosProps }> = ({
             className="portfolio-card"
             onClick={(e) => {
                 e.stopPropagation();
-                location.href = `${portofolio.githubLink}`;
+                // location.href = `${portofolio.githubLink}`;
             }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
             <Card.Img
                 variant="top"
-                src={"https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png"}
+                src={portofolio.coverUrl ?? "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/default_project_thumbnail.png"}
                 alt={portofolio.projectName}
                 className={`px-4 py-2`}
-                style={{height: 125 + "px", objectFit: "contain"}}
+                style={{height: 85 + "%", objectFit: "contain"}}
             />
             <Card.Body>
                 <Card.Title>{portofolio.projectName}</Card.Title>
@@ -79,7 +63,7 @@ const Portofolio: React.FC<{ portofolio: LocalPortofoliosProps }> = ({
                         {portofolio.tags?.map((tag, idx) => (
                             <span
                                 key={idx}
-                                className="badge text-white"
+                                className="badge text-white text-uppercase"
                                 style={{
                                     backgroundColor: stringToColor(tag),
                                     padding: "0.5em 0.75em",
@@ -90,19 +74,45 @@ const Portofolio: React.FC<{ portofolio: LocalPortofoliosProps }> = ({
                         ))}
                     </Card.Text>
                 )}
-                {/* <Card.Subtitle className="mb-2 text-muted">
-          {portofolio.endDate && endDateDisplay}
-        </Card.Subtitle> */}
-                <ReactMarkdown>{portofolio.description ?? ""}</ReactMarkdown>
+                <Card.Subtitle className="mb-2 text-muted">
+                    {timeAgo && portofolio.endDate ? timeAgo(toDate(portofolio.endDate)): "-"}
+                </Card.Subtitle>
+                <ReactMarkdown className="text-capitalize">{portofolio.description ?? ""}</ReactMarkdown>
+                <ButtonGroup aria-label="Project Type" size="sm" vertical>
+                {portofolio.githubLink.fullstack && (
                 <Button
                     variant="dark"
                     onClick={(e) => {
                         e.stopPropagation();
-                        location.href = `${portofolio.githubLink}`;
+                        location.href = `${portofolio.githubLink.fullstack}`;
                     }}
                 >
-                    View Project
+                    View Fullstack Project
                 </Button>
+                )}
+                {portofolio.githubLink.backend && (
+                <Button
+                    variant="dark"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        location.href = `${portofolio.githubLink.backend}`;
+                    }}
+                >
+                    View Backend Project
+                </Button>
+                )}
+                {portofolio.githubLink.frontend && (
+                <Button
+                    variant="dark"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        location.href = `${portofolio.githubLink.frontend}`;
+                    }}
+                >
+                    View Frontend Project
+                </Button>
+                )}
+                </ButtonGroup>
             </Card.Body>
         </Card>
     );

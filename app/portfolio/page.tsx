@@ -1,20 +1,31 @@
-"use client"
+"use client";
 import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import Datetime from "react-datetime";
 import { useAppContext } from "../../components/AppContext";
 import Portofolio from "../../components/Portofolio";
-import { LocalPortofoliosProps, PortfolioReqDto, PortofoliosProps, SortOption } from "../../types";
+import {
+  LocalPortofoliosProps,
+  PortfolioReqDto,
+  PortofoliosProps,
+  SortOption,
+} from "../../types";
 import { PortofolioResponseDto } from "../../utils/Dto";
+import { Col, Container, Row } from "react-bootstrap";
 
 const Portfolio = () => {
   const { router, token } = useAppContext();
-  const [sortedFeed, setSortedFeed] = useState<LocalPortofoliosProps[] | null>(null);
-  const [portofolios, setPortofolios] = useState<LocalPortofoliosProps[] | null>(null);
+  const [sortedFeed, setSortedFeed] = useState<LocalPortofoliosProps[] | null>(
+    null
+  );
+  const [portofolios, setPortofolios] = useState<
+    LocalPortofoliosProps[] | null
+  >(null);
   const [sortOption, setSortOption] = useState<SortOption>("projectName");
-  const [newPortofolio, setNewPortofolio] =
-    useState<PortfolioReqDto | null>(null);
+  const [newPortofolio, setNewPortofolio] = useState<PortfolioReqDto | null>(
+    null
+  );
   const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
@@ -25,16 +36,16 @@ const Portfolio = () => {
   }, [portofolios]);
 
   const fetchPortofolios = async () => {
-      try {
-        const res = await axios.get(`/project-list.json`);
-        // console.log(res.data)
-        // const serializedData = res.data.data.map(PortofolioResponseDto);
-        setPortofolios(res.data.data);
-        // sessionStorage.setItem("portofolioss", JSON.stringify(serializedData)); // Cache data in sessionStorage
-      } catch (error) {
-        console.error("Failed to fetch or process portfolio data:", error);
-      }
-    };
+    try {
+      const res = await axios.get(`/project-list.json`);
+      // console.log(res.data)
+      // const serializedData = res.data.data.map(PortofolioResponseDto);
+      setPortofolios(res.data.data);
+      // sessionStorage.setItem("portofolioss", JSON.stringify(serializedData)); // Cache data in sessionStorage
+    } catch (error) {
+      console.error("Failed to fetch or process portfolio data:", error);
+    }
+  };
 
   useEffect(() => {
     fetchPortofolios();
@@ -86,30 +97,42 @@ const Portfolio = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setNewPortofolio((prev)=>prev?{
-      ...prev,
-      [name]: value,
-    }:null);
+    setNewPortofolio((prev) =>
+      prev
+        ? {
+            ...prev,
+            [name]: value,
+          }
+        : null
+    );
   };
 
   const handleStartDateChange = (date: string | moment.Moment) => {
     const formattedDate = moment.isMoment(date)
       ? date.toDate()
       : new Date(date);
-    setNewPortofolio((prev)=>prev?{
-      ...prev,
-      startDate: formattedDate.toISOString(),
-    }:null);
+    setNewPortofolio((prev) =>
+      prev
+        ? {
+            ...prev,
+            startDate: formattedDate.toISOString(),
+          }
+        : null
+    );
   };
 
   const handleEndDateChange = (date: string | moment.Moment) => {
     const formattedDate = moment.isMoment(date)
       ? date.toDate()
       : new Date(date);
-    setNewPortofolio((prev)=>prev?{
-      ...prev,
-      endDate: formattedDate.toISOString(),
-    }:null);
+    setNewPortofolio((prev) =>
+      prev
+        ? {
+            ...prev,
+            endDate: formattedDate.toISOString(),
+          }
+        : null
+    );
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -132,8 +155,6 @@ const Portfolio = () => {
       console.error("Error adding portfolio:", error);
     }
   };
-
-
 
   return (
     <>
@@ -188,12 +209,16 @@ const Portfolio = () => {
           )}
         </div>
         <main>
-          {portofolios &&
-            portofolios.map((portofolio) => (
-              <div key={portofolio.id} className="portofolio">
-                <Portofolio portofolio={portofolio} />
-              </div>
-            ))}
+          <Container className="min-vh-100 d-flex justify-content-center align-items-center">
+            <Row className="g-4 d-flex align-content-center justify-content-center align-items-center">
+              {portofolios &&
+                portofolios.map((portofolio) => (
+                  <Col key={portofolio.id} xs={12} sm={6} md={4}>
+                    <Portofolio portofolio={portofolio} />
+                  </Col>
+                ))}
+            </Row>
+          </Container>
         </main>
       </div>
       {/* Add Modal */}

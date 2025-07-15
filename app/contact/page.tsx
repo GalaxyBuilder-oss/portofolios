@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Layout from "../../components/Layout";
 import {Card, Col, Container, Row} from "react-bootstrap";
 
 const Contact = () => {
@@ -25,7 +24,7 @@ const Contact = () => {
 
   return (
       <Container className="my-5">
-        <h2 className="text-center mb-4">Reach Me</h2>
+        {/* <h2 className="text-center mb-4">Reach Me</h2> */}
 
         {/* Contact form disabled, can be enabled later */}
         {/*
@@ -72,7 +71,7 @@ const Contact = () => {
 
         <Card className="mt-5 shadow-sm border-0">
           <Card.Body>
-            <Card.Title className="text-center mb-4">Or Connect via Social Media</Card.Title>
+            <Card.Title className="text-center mb-4">Connect via Social Media</Card.Title>
             <Row className="text-center g-4">
               <Col md={4}>
                 <i className="bi bi-linkedin fs-2 text-primary"></i>

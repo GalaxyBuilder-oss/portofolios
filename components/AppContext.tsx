@@ -6,7 +6,6 @@ import {
   createContext,
   ReactNode,
   useContext,
-  useEffect,
   useState,
 } from "react";
 import { PortofoliosProps, UsersProps } from "../types";

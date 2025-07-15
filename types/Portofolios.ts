@@ -9,9 +9,15 @@ export type LocalPortofoliosProps = {
   status?: string;
   budget?: number | null;
   coverUrl?: string | null;
-  githubLink: string;
+  githubLink: ProjectType;
   tags?: string[];
 };
+
+type ProjectType = {
+    frontend?: string;
+    backend?: string;
+    fullstack?: string;
+  };
 
 export type PortofoliosProps = {
   id: number;
