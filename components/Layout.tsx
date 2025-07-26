@@ -19,9 +19,7 @@ const Layout: React.FC<Props> = (props) => (
       />
       
     </Head>
-    {/* <Header /> */}
     <div className="layout">{props.children}</div>
-    {/* <Footer /> */}
   </>
 );
 

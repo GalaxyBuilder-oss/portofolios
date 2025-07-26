@@ -56,14 +56,14 @@ const Header: React.FC = () => {
           >
             Home
           </Nav.Link>
-          <Nav.Link
+          {/* <Nav.Link
             href="/portfolio"
             onClick={() => setExpanded(false)}
             active={isActive("/portfolio")}
             className={`text-light text-decoration-none ${isActive("/portfolio") && "border-bottom border-white border-2 rounded"}`}
           >
             Portfolio
-          </Nav.Link>
+          </Nav.Link> */}
           <Nav.Link
             href="/about"
             onClick={() => setExpanded(false)}

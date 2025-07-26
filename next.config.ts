@@ -14,6 +14,9 @@ const nextConfig: NextConfig = {
     ],
   },
   reactStrictMode: false,
+  images: {
+    remotePatterns: [new URL('https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/**')],
+  },
 };
 
 export default nextConfig;

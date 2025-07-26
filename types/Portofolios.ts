@@ -11,6 +11,8 @@ export type LocalPortofoliosProps = {
   coverUrl?: string | null;
   githubLink: ProjectType;
   tags?: string[];
+  role?: string;
+  tools?: string[];
 };
 
 type ProjectType = {

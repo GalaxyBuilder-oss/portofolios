@@ -6,38 +6,44 @@
       "projectName": "Danapo | Pelatihan Logika Dasar Dan Bahasa C",
       "description": "Aplikasi Pinjaman berbasis bahasa c",
       "startDate": "2023-01-07T00:00:00Z",
-      "endDate": "2023-01-17T23:59:59Z",
+      "endDate": "2023-01-16T23:59:59Z",
       "status": "Done",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/danapo.png",
       "githubLink": {
         "fullstack":"https://github.com/GalaxyBuilder-oss/Danapo"
         },
-      "tags": ["C","Desktop"]
+      "tags": ["C","Desktop"],
+      "role": "Full Stack",
+      "tools":["Visual Studio Code"]
     },
     {
       "id": 1,
       "projectName": "Tokopaedi | Pelatihan WEB",
       "description": "Website penjualan berbasis html, js dan css, menggunakan Rest API publik dari fakestoreapi.com",
       "startDate": "2023-08-20T00:00:00Z",
-      "endDate": "2023-08-30T23:59:59Z",
+      "endDate": "2023-08-29T23:59:59Z",
       "status": "Done",
       "budget": 0,
       "coverUrl":"https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/tokopaedi.png",
       "githubLink": {"frontend": "https://github.com/GalaxyBuilder-oss/Tokopaedi-Web-Project"},
-      "tags": ["HTML", "CSS", "JavaScript", "REST API","Web"]
+      "tags": ["HTML", "CSS", "JavaScript","Web"],
+      "role": "Front End",
+      "tools":["Visual Studio Code"]
     },
     {
       "id": 2,
       "projectName": "Sistem PUB | Pelatihan Java Fundamental",
       "description": "API Sistem PUB menggunakan mysql sebagai databasenya dan java springoot dan thymeleaf",
       "startDate": "2023-11-29T00:00:00Z",
-      "endDate": "2023-11-08T23:59:59Z",
+      "endDate": "2023-12-08T23:59:59Z",
       "status": "Done",
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/system_pub.png",
       "githubLink": {"fullstack":"https://github.com/GalaxyBuilder-oss/java-fundamental-project"},
-      "tags": ["Java", "Spring Boot", "Thymeleaf", "MySQL","Web"]
+      "tags": ["Java", "Spring Boot", "Thymeleaf", "MySQL","Web"],
+      "role": "Full Stack",
+      "tools":["Visual Studio Code","XAMPP"]
     },
     {
       "id": 3,
@@ -49,7 +55,9 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/rasa_hotel.png",
       "githubLink": {"backend":"https://github.com/GalaxyBuilder-oss/rasahotel-backend","frontend":"https://github.com/GalaxyBuilder-oss/rasahotel-frontend"},
-      "tags": ["Java", "Spring Boot", "REST API","Web"]
+      "tags": ["Java", "Spring Boot", "MySQL", "REST API","Web"],
+      "role": "Full Stack",
+      "tools":["Visual Studio Code","XAMPP"]
     },
     {
       "id": 4,
@@ -61,7 +69,9 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/money_meter.png",
       "githubLink": {"fullstack":"https://github.com/GalaxyBuilder-oss/rasahotel-frontend"},
-      "tags": ["ReactJS", "Java", "Spring Boot", "JavaScript", "Tailwind","Web"]
+      "tags": ["ReactJS", "Java", "Spring Boot", "PostgreSQL", "JavaScript", "Tailwind","Web"],
+      "role": "Full Stack",
+      "tools":["IntelIJ","Visual Studio Code"]
     },
     {
       "id": 5,
@@ -73,7 +83,9 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/absensi_sholat.png",
       "githubLink": {"fullstack":"https://github.com/GalaxyBuilder-oss/rasahotel-frontend"},
-      "tags": ["Javascript", "ReactJS", "Firebase", "Firestore", "Web"]
+      "tags": ["Javascript", "ReactJS", "Firebase", "Firestore", "Web"],
+      "role": "Full Stack",
+      "tools":["Visual Studio Code"]
     },
     {
       "id": 6,
@@ -85,7 +97,9 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/general_ledger.png",
       "githubLink": {"fullstack":"https://github.com/GalaxyBuilder-oss/General-Ledger"},
-      "tags": ["Visual Basic", "Desktop"]
+      "tags": ["Visual Basic", "MSSQL", "Desktop"],
+      "role": "Full Stack",
+      "tools":["Visual Studio 2012"]
     },
     {
       "id": 7,
@@ -97,7 +111,9 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/calc_ip.png",
       "githubLink": {"frontend":"https://github.com/GalaxyBuilder-oss/calc-ip"},
-      "tags": ["JavaScript", "Web"]
+      "tags": ["JavaScript", "Web"],
+      "role": "Front End",
+      "tools":["Visual Studio Code"]
     },
     {
       "id": 8,
@@ -109,7 +125,9 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/ip_subnetting.png",
       "githubLink": {"fullstack":"https://github.com/GalaxyBuilder-oss/ip-subnetting"},
-      "tags": ["Python", "Networking","Desktop"]
+      "tags": ["Python", "Networking","Desktop"],
+      "role": "Full Stack",
+      "tools":["Visual Studio Code"]
     },
     {
       "id": 9,
@@ -121,7 +139,9 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/tower_defense.png",
       "githubLink": {"fullstack":"https://github.com/GalaxyBuilder-oss/towerdefense"},
-      "tags": ["Java", "Swing","Desktop"]
+      "tags": ["Java", "Swing","Desktop"],
+      "role": "Full Stack",
+      "tools":["Visual Studio Code"]
     },
     {
       "id": 10,
@@ -133,7 +153,9 @@
       "budget": 0,
       "coverUrl": "https://portofolio2024.s3.ap-southeast-1.amazonaws.com/public/chat_sub.png",
       "githubLink": {"backend":"https://github.com/GalaxyBuilder-oss/","frontend":"https://github.com/GalaxyBuilder-oss/"},
-      "tags": ["C#", ".NET CORE", "REST API"]
+      "tags": ["C#", ".NET CORE", "MSSQL", "REST API", "WEB"],
+      "role": "Full Stack",
+      "tools":["Visual Studio 2022","Visual Studio Code"]
     }
   ]
 }

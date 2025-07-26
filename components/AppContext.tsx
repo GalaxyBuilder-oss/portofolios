@@ -6,19 +6,21 @@ import {
   createContext,
   ReactNode,
   useContext,
+  useEffect,
   useState,
 } from "react";
-import { PortofoliosProps, UsersProps } from "../types";
-import { PortofolioResponseDto, UserResponseDto } from "../utils/Dto";
+import { LocalPortofoliosProps, PortfolioImgs, UsersProps } from "../types";
+import { UserResponseDto } from "../utils/Dto";
 
 // Define the structure of your context
 type AppContextProps = {
-  profile?: UsersProps|null;
+  profile?: UsersProps | null;
   defaultProfile?: UsersProps;
   fetchUser?: () => void;
   token?: string;
   router?: any;
   timeAgo?: (date: Date) => string;
+  portfolioImgs?: PortfolioImgs[];
 };
 
 // Create the context with default values
@@ -29,6 +31,7 @@ const AppProvider: React.FC = ({ children }: { children: ReactNode }) => {
   const [profile, setProfile] = useState<UsersProps | null>();
   const router = useRouter();
   const token = Cookies.get("token");
+  const [portfolioImgs, setPortofolioImgs] = useState<PortfolioImgs[]>();
 
   //   Initializer
   const defaultProfile: UsersProps = {
@@ -92,10 +95,10 @@ const AppProvider: React.FC = ({ children }: { children: ReactNode }) => {
       const hours1 = Math.floor(minutes1 / 60);
       const days1 = Math.floor(hours1 / 24);
       if (days1 > 0) {
-        return `${days1} hari ${hours1%24} jam ${minutes1%60} menit lagi`;
+        return `${days1} hari ${hours1 % 24} jam ${minutes1 % 60} menit lagi`;
       } else if (hours1 > 0) {
-        return `${hours1} jam ${minutes1%60} menit lagi lagi`;
-      }  else if (minutes1 > 0) {
+        return `${hours1} jam ${minutes1 % 60} menit lagi lagi`;
+      } else if (minutes1 > 0) {
         return `${minutes1} menit lagi`;
       } else return "Mendatang";
     }
@@ -114,9 +117,30 @@ const AppProvider: React.FC = ({ children }: { children: ReactNode }) => {
     }
   }
 
+  useEffect(() => {
+    const fetchImages = async () => {
+      const res = await axios.get("/project-list.json");
+      setPortofolioImgs(
+        res.data.data.map((p: LocalPortofoliosProps) => ({
+          image: p.coverUrl,
+          title: p.projectName,
+        })) as PortfolioImgs[]
+      );
+    };
+    fetchImages();
+  }, []);
+
   return (
     <AppContext.Provider
-      value={{ profile, defaultProfile, fetchUser, router, token, timeAgo }}
+      value={{
+        profile,
+        defaultProfile,
+        fetchUser,
+        router,
+        token,
+        timeAgo,
+        portfolioImgs,
+      }}
     >
       {children}
     </AppContext.Provider>

@@ -159,7 +159,6 @@ const Portfolio = () => {
   return (
     <>
       <div className="page m-3">
-        <h1>My Portofolio</h1>
         <p className={"text-end"}>{portofolios?.length || "0"} Projek</p>
         <div className="d-flex justify-content-between">
           {/* <div className="d-flex align-items-center">
@@ -191,22 +190,6 @@ const Portfolio = () => {
                 Add
               </button>
             </div> */}
-          {token && (
-            <div
-              className="btn-group"
-              role="group"
-              aria-label="this for button"
-            >
-              <button
-                className="btn btn-dark"
-                onClick={() => {
-                  setShowAddModal(true);
-                }}
-              >
-                Add
-              </button>
-            </div>
-          )}
         </div>
         <main>
           <Container className="min-vh-100 d-flex justify-content-center align-items-center">
